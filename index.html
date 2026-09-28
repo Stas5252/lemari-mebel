@@ -229,6 +229,22 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 .ok.show{display:block;animation:pop .45s cubic-bezier(.2,.7,.2,1)}
 @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
+/* contacts & map */
+.contacts-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:28px;margin-top:36px;align-items:stretch}
+.contact-cards{display:flex;flex-direction:column;gap:14px}
+.c-card{background:var(--raised);border:1px solid var(--line-soft);border-radius:var(--r);padding:22px 24px;transition:border-color .2s,background .2s}
+.c-card:hover{border-color:var(--line);background:#1D1F22}
+.c-card .c-label{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:600}
+.c-card .c-val{font-size:18px;font-weight:600;color:var(--text);margin:0;line-height:1.35}
+.c-card .c-link{color:var(--text);transition:color .2s}
+.c-card .c-link:hover{color:var(--accent)}
+.c-card .c-sub{font-size:13.5px;color:var(--muted);margin-top:6px;line-height:1.4}
+.c-actions{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap}
+.c-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:500;color:var(--text);transition:all .2s;text-decoration:none}
+.c-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--raised);transform:translateY(-1px)}
+.map-wrap{position:relative;min-height:430px;border-radius:14px;overflow:hidden;border:1px solid var(--line-soft);background:var(--surface);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.map-wrap iframe{width:100%;height:100%;min-height:430px;border:0;display:block}
+
 footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 0 40px}
 .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
 .fgrid h4{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:500}
@@ -250,6 +266,8 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
   .split .txt{padding:28px}
   .steps{grid-template-columns:1fr 1fr}
   .facts{grid-template-columns:1fr}
+  .contacts-grid{grid-template-columns:1fr}
+  .map-wrap,.map-wrap iframe{min-height:360px}
   .fgrid{grid-template-columns:1fr 1fr}
   .scroll-hint{display:none}
 }
@@ -283,7 +301,8 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
     <a class="link" href="#projects">Модульные проекты</a>
     <a class="link" href="#materials">Материалы</a>
     <a class="link" href="#process">Как работаем</a>
-    <a class="tel" href="tel:+78172000000">+7 (8172) 00‑00‑00</a>
+    <a class="link" href="#contacts">Контакты</a>
+    <a class="tel" href="tel:+79814340888">+7 981 434 08 88</a>
     <a class="btn" href="#request">Заявка на замер</a>
     <button class="burger" aria-label="Меню"><span></span></button>
   </div>
@@ -539,6 +558,54 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
   </div>
 </section>
 
+<!-- CONTACTS & MAP -->
+<section class="pad" id="contacts" style="border-top:1px solid var(--line-soft)">
+  <div class="wrap">
+    <p class="eyebrow rv">Контакты и схема проезда</p>
+    <div class="rv" style="max-width:760px;margin-bottom:36px">
+      <h2>Салон и производство в Вологде</h2>
+      <p class="lead" style="margin-top:14px">Приглашаем в наш салон: вживую оцените образцы фасадов, материалы столешниц и работу европейской фурнитуры. На месте бесплатно составим 3D-проект под ваши размеры и рассчитаем точную смету.</p>
+    </div>
+
+    <div class="contacts-grid">
+      <div class="contact-cards rv">
+        <div class="c-card">
+          <div class="c-label">Адрес салона</div>
+          <div class="c-val">г. Вологда, Родионцево, 77</div>
+          <div class="c-sub">2 этаж · Удобный заезд с Окружного шоссе, бесплатная парковка прямо у здания</div>
+        </div>
+
+        <div class="c-card">
+          <div class="c-label">Рабочий телефон</div>
+          <div class="c-val"><a class="c-link" href="tel:+79814340888">+7 981 434 08 88</a></div>
+          <div class="c-sub">Консультируем, отвечаем на любые вопросы и записываем на бесплатный замер</div>
+        </div>
+
+        <div class="c-card">
+          <div class="c-label">Электронная почта</div>
+          <div class="c-val"><a class="c-link" href="mailto:mebel35@inbox.ru">mebel35@inbox.ru</a></div>
+          <div class="c-sub">Присылайте эскизы, чертежи и дизайн-проекты для оперативного расчёта стоимости</div>
+        </div>
+
+        <div class="c-actions">
+          <a class="c-btn" href="https://yandex.ru/maps/?text=%D0%92%D0%BE%D0%BB%D0%BE%D0%B3%D0%B4%D0%B0%2C+%D0%A0%D0%BE%D0%B4%D0%B8%D0%BE%D0%BD%D1%86%D0%B5%D0%B2%D0%BE%2C+77" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Маршрут в Яндекс.Картах
+          </a>
+          <a class="c-btn" href="https://2gis.ru/vologda/search/%D0%A0%D0%BE%D0%B4%D0%B8%D0%BE%D0%BD%D1%86%D0%B5%D0%B2%D0%BE%2077" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="12 8 8 12 12 16 12 8"/></svg>
+            Схема в 2ГИС
+          </a>
+        </div>
+      </div>
+
+      <div class="map-wrap rv">
+        <iframe src="https://yandex.ru/map-widget/v1/?text=%D0%92%D0%BE%D0%BB%D0%BE%D0%B3%D0%B4%D0%B0%2C%20%D0%A0%D0%BE%D0%B4%D0%B8%D0%BE%D0%BD%D1%86%D0%B5%D0%B2%D0%BE%2C%2077&z=16" title="Схема проезда — г. Вологда, Родионцево 77, 2 этаж" loading="lazy" allowfullscreen="true"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <div class="fgrid">
@@ -551,16 +618,18 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
         <li><a href="#projects">Модульные проекты</a></li>
         <li><a href="#materials">Материалы</a></li>
         <li><a href="#process">Как работаем</a></li>
+        <li><a href="#contacts">Контакты и схема</a></li>
       </ul></div>
       <div><h4>Контакты</h4><ul>
-        <li><a href="tel:+78172000000">+7 (8172) 00‑00‑00</a></li>
-        <li>hello@lemari35.ru</li>
-        <li>Вологда, ул. Примерная, 1</li>
-        <li>Ежедневно 10:00–20:00</li>
+        <li><a href="tel:+79814340888">+7 981 434 08 88</a></li>
+        <li><a href="mailto:mebel35@inbox.ru">mebel35@inbox.ru</a></li>
+        <li>г. Вологда, Родионцево, 77 (2 этаж)</li>
+        <li>Ежедневно 10:00–19:00</li>
       </ul></div>
       <div><h4>Салон</h4><ul>
+        <li>г. Вологда, Родионцево, 77</li>
+        <li>2 этаж · бесплатная парковка</li>
         <li>Показываем образцы фасадов</li>
-        <li>Рассрочка 0% на месте</li>
         <li>Замер по Вологде — бесплатно</li>
       </ul></div>
     </div>
@@ -574,12 +643,13 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
   <a href="#projects">Модульные проекты</a>
   <a href="#materials">Материалы</a>
   <a href="#process">Как работаем</a>
-  <a href="tel:+78172000000">+7 (8172) 00‑00‑00</a>
+  <a href="#contacts">Контакты и схема</a>
+  <a href="tel:+79814340888">+7 981 434 08 88</a>
   <a class="btn" href="#request">Заявка на замер</a>
 </div>
 
 <div class="mobile-bar">
-  <a class="btn ghost" href="tel:+78172000000">Позвонить</a>
+  <a class="btn ghost" href="tel:+79814340888">Позвонить</a>
   <a class="btn" href="#request">Замер бесплатно</a>
 </div>
 
