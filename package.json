@@ -1,0 +1,9 @@
+{
+  "name": "lemari-site",
+  "version": "1.0.0",
+  "description": "Сайт LeMARI Вологда",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LeMARI Вологда — кухни, шкафы и мебель на заказ</title>
+<style>
+:root{
+  --ink:#0B0B0C;
+  --surface:#121314;
+  --raised:#191A1C;
+  --line:rgba(255,255,255,.12);
+  --line-soft:rgba(255,255,255,.07);
+  --text:#F4F2EF;
+  --muted:rgba(244,242,239,.60);
+  --accent:#E08B45;
+  --accent-2:#C9702F;
+  --accent-soft:rgba(224,139,69,.12);
+  --r:10px;
+  --maxw:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--ink);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+.eyebrow{
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:12px;margin:0 0 20px;
+}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--accent);opacity:.7}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.02em}
+h2{font-size:clamp(28px,3.4vw,44px);line-height:1.1}
+h3{font-size:20px}
+.lead{color:var(--muted);max-width:62ch}
+section{position:relative}
+.pad{padding:104px 0}
+.hr{height:1px;background:var(--line-soft)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:0 26px;border-radius:var(--r);border:1px solid transparent;
+  background:var(--accent);color:#140C05;font-weight:600;cursor:pointer;
+  transition:transform .25s ease,background .25s ease,box-shadow .25s ease;
+}
+.btn:hover{background:#EDA061;transform:translateY(-2px);box-shadow:0 10px 30px rgba(224,139,69,.22)}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--text)}
+.btn.ghost:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.3);box-shadow:none}
+.btn:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.chip:focus-visible,.opt:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* header */
+header{
+  position:fixed;inset:0 0 auto;z-index:60;
+  backdrop-filter:blur(14px);background:rgba(11,11,12,0);border-bottom:1px solid transparent;
+  transition:background .35s ease,border-color .35s ease,padding .35s ease;
+  padding:18px 0;
+}
+header.stuck{background:rgba(11,11,12,.82);border-bottom-color:var(--line-soft);padding:10px 0}
+.nav{display:flex;align-items:center;gap:36px}
+.brand{display:flex;flex-direction:column;line-height:1;margin-right:auto}
+.brand b{font-size:22px;font-weight:700;letter-spacing:.02em}
+.brand b i{font-style:normal;color:var(--accent)}
+.brand span{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.nav a.link{font-size:14px;color:var(--muted);position:relative;padding:6px 0;transition:color .2s}
+.nav a.link::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--accent);transition:width .3s ease}
+.nav a.link:hover{color:var(--text)}
+.nav a.link:hover::after{width:100%}
+.tel{font-size:15px;font-weight:600;white-space:nowrap}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:var(--r);background:none;align-items:center;justify-content:center;cursor:pointer}
+.burger span{display:block;width:18px;height:1px;background:var(--text);position:relative}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:1px;background:var(--text)}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+
+/* mobile menu */
+.sheet{
+  position:fixed;inset:0;z-index:80;background:rgba(9,9,10,.97);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;justify-content:center;gap:6px;padding:32px 24px;
+  opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .3s ease,transform .35s ease,visibility .3s;
+}
+.sheet.open{opacity:1;visibility:visible;transform:none}
+.sheet a{font-size:26px;font-weight:600;letter-spacing:-.02em;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.sheet .close{position:absolute;top:18px;right:20px;width:44px;height:44px;border:1px solid var(--line);border-radius:var(--r);background:none;cursor:pointer;font-size:20px}
+.sheet .btn{margin-top:24px}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:flex-end;padding-bottom:56px;overflow:hidden}
+.hero-bg{position:absolute;inset:-8% 0 0;z-index:0}
+.hero-bg img{width:100%;height:112%;object-fit:cover;filter:saturate(.92) contrast(1.04)}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(11,11,12,.82) 0%,rgba(11,11,12,.42) 38%,rgba(11,11,12,.92) 88%,var(--ink) 100%);
+}
+.hero .wrap{position:relative;z-index:1;width:100%}
+.hero h1{font-size:clamp(38px,6.4vw,82px);line-height:.98;max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{margin:22px 0 34px;max-width:52ch;color:rgba(244,242,239,.78);font-size:17px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(18,19,20,.55);font-size:13px;color:rgba(244,242,239,.86);
+}
+.badge i{width:5px;height:5px;border-radius:50%;background:var(--accent);display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:var(--r);margin-top:56px;overflow:hidden}
+.stat{background:rgba(11,11,12,.72);padding:22px 24px}
+.stat b{display:block;font-size:30px;font-weight:600;letter-spacing:-.02em}
+.stat b small{font-size:15px;font-weight:500;color:var(--muted);margin-left:4px}
+.stat span{font-size:13px;color:var(--muted)}
+.scroll-hint{position:absolute;right:32px;bottom:56px;z-index:2;writing-mode:vertical-rl;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px}
+.scroll-hint::after{content:"";width:1px;height:52px;background:linear-gradient(var(--accent),transparent);animation:drop 2.4s infinite}
+@keyframes drop{0%{transform:scaleY(.2);opacity:.2}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.2);opacity:.2}}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line-soft);padding:18px 0;overflow:hidden;background:var(--surface)}
+.marquee-row{display:flex;gap:56px;width:max-content;animation:slide 32s linear infinite}
+.marquee-row span{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,242,239,.4);white-space:nowrap;display:flex;align-items:center;gap:56px}
+.marquee-row span::after{content:"";width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.7}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* configurator */
+.cfg{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start;margin-top:48px}
+.panel{border:1px solid var(--line-soft);border-radius:14px;background:var(--surface);padding:28px}
+.field{margin-bottom:26px}
+.field:last-child{margin-bottom:0}
+.flabel{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.flabel b{font-size:15px;letter-spacing:0;text-transform:none;color:var(--text)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px}
+.opt{
+  border:1px solid var(--line);background:var(--raised);border-radius:var(--r);
+  padding:13px 14px;text-align:left;cursor:pointer;min-height:52px;
+  transition:border-color .2s,background .2s,transform .2s;display:flex;flex-direction:column;gap:3px;
+}
+.opt small{color:var(--muted);font-size:12px}
+.opt:hover{border-color:rgba(255,255,255,.26);transform:translateY(-1px)}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt[aria-pressed="true"] small{color:rgba(244,242,239,.75)}
+input[type=range]{-webkit-appearance:none;width:100%;height:36px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:rgba(255,255,255,.16)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);margin-top:-10px;border:4px solid var(--ink);box-shadow:0 0 0 1px var(--accent)}
+.checks{display:grid;gap:8px}
+.check{display:flex;align-items:center;gap:12px;border:1px solid var(--line-soft);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:border-color .2s,background .2s;min-height:52px}
+.check:hover{border-color:rgba(255,255,255,.22)}
+.check input{appearance:none;width:18px;height:18px;border:1px solid var(--line);border-radius:5px;flex:none;position:relative;cursor:pointer;transition:.2s}
+.check input:checked{background:var(--accent);border-color:var(--accent)}
+.check input:checked::after{content:"";position:absolute;left:5px;top:2px;width:5px;height:9px;border:1.6px solid #140C05;border-top:0;border-left:0;transform:rotate(42deg)}
+.check span{font-size:14px}
+.check b{margin-left:auto;font-size:14px;color:var(--muted);font-weight:500;white-space:nowrap}
+.check input:checked ~ b{color:var(--accent)}
+.viz{position:sticky;top:104px}
+.plan{border:1px solid var(--line-soft);border-radius:14px;background:linear-gradient(180deg,#16171A,#101113);padding:22px}
+.plan svg{width:100%;height:auto;display:block}
+.price{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:24px;margin-top:14px}
+.price .row{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);padding:7px 0}
+.price .row b{color:var(--text);font-weight:500}
+.total{display:flex;align-items:flex-end;gap:12px;margin:6px 0 4px}
+.total .num{font-size:clamp(30px,4vw,42px);font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.total .was{font-size:16px;color:var(--muted);text-decoration:line-through;margin-bottom:8px}
+.note{font-size:12.5px;color:var(--muted);margin:10px 0 18px}
+
+/* projects */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 26px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:10px 18px;font-size:13.5px;cursor:pointer;color:var(--muted);transition:.2s;min-height:44px}
+.chip:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.chip.on{background:var(--text);border-color:var(--text);color:#0B0B0C;font-weight:600}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{border:1px solid var(--line-soft);border-radius:14px;overflow:hidden;background:var(--surface);transition:transform .4s cubic-bezier(.2,.7,.2,1),border-color .3s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.2)}
+.card .ph{position:relative;aspect-ratio:4/3;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.card:hover .ph img{transform:scale(1.06)}
+.tag{position:absolute;left:14px;top:14px;background:rgba(11,11,12,.72);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.card .body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card .body p{margin:0;color:var(--muted);font-size:14px}
+.specs{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line-soft);padding-top:14px;margin-top:auto}
+.specs b{color:var(--text);font-weight:500}
+.pricetag{display:flex;align-items:baseline;gap:8px;font-size:19px;font-weight:600}
+.pricetag small{font-size:12.5px;color:var(--muted);font-weight:400}
+.card.cta-card{background:linear-gradient(155deg,rgba(224,139,69,.16),rgba(18,19,20,.9));border-color:rgba(224,139,69,.35);justify-content:center;padding:32px;gap:16px}
+.card.cta-card h3{font-size:24px}
+
+/* split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;border:1px solid var(--line-soft);border-radius:14px;overflow:hidden}
+.split .media{position:relative;min-height:420px}
+.split .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.split .txt{padding:44px}
+.speclist{display:grid;gap:0;margin-top:24px}
+.speclist div{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line-soft);font-size:14.5px}
+.speclist div span{color:var(--muted)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:14px;overflow:hidden;margin-top:44px}
+.step{background:var(--surface);padding:30px;min-height:190px;transition:background .3s}
+.step:hover{background:var(--raised)}
+.step b{display:block;font-size:12px;letter-spacing:.18em;color:var(--accent);margin-bottom:16px}
+.step h3{font-size:18px;margin-bottom:8px}
+.step p{margin:0;color:var(--muted);font-size:14px}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:44px}
+.fact{display:flex;gap:16px;border:1px solid var(--line-soft);border-radius:var(--r);padding:20px;background:var(--surface)}
+.fact svg{flex:none;margin-top:2px}
+.fact p{margin:0;font-size:14.5px;color:rgba(244,242,239,.82)}
+
+/* form */
+.form-sec{background:var(--surface);border-top:1px solid var(--line-soft)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+.inp{grid-column:span 1}
+.inp.full{grid-column:span 2}
+.inp label{display:block;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.inp input,.inp select,.inp textarea{
+  width:100%;min-height:52px;background:var(--raised);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;transition:border-color .2s,background .2s;
+}
+.inp textarea{min-height:104px;resize:vertical}
+.inp input:focus,.inp select:focus,.inp textarea:focus{border-color:var(--accent);outline:none;background:#1D1E20}
+.form-note{font-size:12.5px;color:var(--muted);margin-top:14px}
+.ok{display:none;border:1px solid rgba(224,139,69,.4);background:var(--accent-soft);border-radius:var(--r);padding:18px 20px;margin-top:18px;font-size:15px}
+.ok.show{display:block;animation:pop .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 0 40px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+.fgrid h4{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:500}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:14.5px;color:rgba(244,242,239,.8)}
+.fbot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:48px;padding-top:24px;border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--muted)}
+.mobile-bar{display:none}
+
+@media (max-width:960px){
+  .wrap{padding:0 20px}
+  .pad{padding:72px 0}
+  .nav a.link,.tel,.nav > .btn{display:none}
+  .burger{display:flex;margin-left:auto}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .cfg{grid-template-columns:1fr;gap:22px}
+  .viz{position:static}
+  .grid3{grid-template-columns:1fr 1fr}
+  .split{grid-template-columns:1fr}
+  .split .media{min-height:280px}
+  .split .txt{padding:28px}
+  .steps{grid-template-columns:1fr 1fr}
+  .facts{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .scroll-hint{display:none}
+}
+@media (max-width:620px){
+  .hero{min-height:auto;padding:132px 0 40px}
+  .grid3{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .inp.full{grid-column:span 1}
+  .fgrid{grid-template-columns:1fr}
+  body{padding-bottom:78px}
+  .mobile-bar{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;gap:10px;padding:12px 16px;
+    background:rgba(11,11,12,.92);backdrop-filter:blur(14px);border-top:1px solid var(--line-soft);
+  }
+  .mobile-bar .btn{flex:1}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><b>Le<i>MARI</i></b><span>Вологда</span></a>
+    <a class="link" href="#configurator">Конструктор</a>
+    <a class="link" href="#projects">Модульные проекты</a>
+    <a class="link" href="#materials">Материалы</a>
+    <a class="link" href="#process">Как работаем</a>
+    <a class="tel" href="tel:+78172000000">+7 (8172) 00‑00‑00</a>
+    <a class="btn" href="#request">Заявка на замер</a>
+    <button class="burger" aria-label="Меню"><span></span></button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-bg" id="heroBg"><img src="assets/kitchen-dark.jpeg" alt="Кухня на заказ в графите и дубовом шпоне" /></div>
+  <div class="wrap">
+    <div class="hero-badges rv">
+      <span class="badge"><i></i>Собственное производство в Вологде</span>
+      <span class="badge"><i></i>Работаем с 2006 года</span>
+      <span class="badge"><i></i>Рассрочка без процентов</span>
+    </div>
+    <h1 class="rv">Кухни и шкафы<br />по вашим размерам, <em>без компромиссов</em></h1>
+    <p class="rv">Индивидуальный проект, честный чертёж с размерами, цвет и материалы зафиксированы в договоре. Сборка и установка уже в стоимости.</p>
+    <div class="hero-cta rv">
+      <a class="btn" href="#configurator">Собрать кухню и узнать цену</a>
+      <a class="btn ghost" href="#projects">Модульные проекты</a>
+    </div>
+    <div class="stats rv">
+      <div class="stat"><b data-count="19">0</b><span>лет на рынке Вологды</span></div>
+      <div class="stat"><b data-count="18">0<small>мес</small></b><span>гарантия без бюрократии</span></div>
+      <div class="stat"><b data-count="45">0<small>дн</small></b><span>средний срок сдачи кухни</span></div>
+      <div class="stat"><b data-count="11">0<small>лет</small></b><span>средний стаж сборщиков</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Листайте</div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-row">
+    <span>Эмаль матовая<span></span></span><span>Шпон дуба</span><span>Массив ясеня</span><span>Кварцевый агломерат</span><span>Blum &amp; Hettich</span><span>Скрытая подсветка</span><span>Эмаль матовая</span><span>Шпон дуба</span><span>Массив ясеня</span><span>Кварцевый агломерат</span><span>Blum &amp; Hettich</span><span>Скрытая подсветка</span>
+  </div>
+</div>
+
+<!-- CONFIGURATOR -->
+<section class="pad" id="configurator">
+  <div class="wrap">
+    <p class="eyebrow rv">Конструктор и калькулятор</p>
+    <h2 class="rv">Соберите свою кухню<br />и увидите цену сразу</h2>
+    <p class="lead rv" style="margin-top:18px">Выберите планировку, длину и материалы — план и стоимость пересчитываются в реальном времени. Финальная смета фиксируется после бесплатного замера.</p>
+
+    <div class="cfg">
+      <div class="panel rv">
+        <div class="field">
+          <div class="flabel">Планировка <b id="lblLayout">Прямая</b></div>
+          <div class="opts" id="layout">
+            <button class="opt" aria-pressed="true" data-k="1" data-v="line">Прямая<small>вдоль одной стены</small></button>
+            <button class="opt" aria-pressed="false" data-k="1.14" data-v="corner">Угловая<small>L‑образная</small></button>
+            <button class="opt" aria-pressed="false" data-k="1.28" data-v="u">П‑образная<small>три стены</small></button>
+            <button class="opt" aria-pressed="false" data-k="1.42" data-v="island">С островом<small>кухня‑гостиная</small></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="flabel">Длина по фасаду <b><span id="lenVal">3.2</span> м</b></div>
+          <input type="range" id="len" min="1.6" max="6" step="0.1" value="3.2" aria-label="Длина кухни в метрах" />
+        </div>
+
+        <div class="field">
+          <div class="flabel">Фасады <b id="lblFront">Эмаль матовая</b></div>
+          <div class="opts" id="fronts">
+            <button class="opt" aria-pressed="false" data-p="18000" data-v="ЛДСП премиум">ЛДСП премиум<small>от 18 000 ₽/м.п.</small></button>
+            <button class="opt" aria-pressed="true" data-p="32000" data-v="Эмаль матовая">Эмаль матовая<small>от 32 000 ₽/м.п.</small></button>
+            <button class="opt" aria-pressed="false" data-p="41000" data-v="Шпон дуба">Шпон дуба<small>от 41 000 ₽/м.п.</small></button>
+            <button class="opt" aria-pressed="false" data-p="52000" data-v="Массив ясеня">Массив ясеня<small>от 52 000 ₽/м.п.</small></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="flabel">Столешница <b id="lblTop">Искусственный камень</b></div>
+          <div class="opts" id="tops">
+            <button class="opt" aria-pressed="false" data-p="4200" data-v="Постформинг">Постформинг<small>4 200 ₽/м</small></button>
+            <button class="opt" aria-pressed="false" data-p="9500" data-v="Компакт-плита">Компакт‑плита<small>9 500 ₽/м</small></button>
+            <button class="opt" aria-pressed="true" data-p="14500" data-v="Искусственный камень">Искусственный камень<small>14 500 ₽/м</small></button>
+            <button class="opt" aria-pressed="false" data-p="21000" data-v="Кварц">Кварцевый агломерат<small>21 000 ₽/м</small></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="flabel">Верхние шкафы <b id="lblUp">До 920 мм</b></div>
+          <div class="opts" id="ups">
+            <button class="opt" aria-pressed="false" data-k="1" data-v="До 720 мм">До 720 мм<small>базовая высота</small></button>
+            <button class="opt" aria-pressed="true" data-k="1.06" data-v="До 920 мм">До 920 мм<small>+6%</small></button>
+            <button class="opt" aria-pressed="false" data-k="1.15" data-v="До потолка">До потолка<small>+15%, антресоли</small></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="flabel">Комплектация</div>
+          <div class="checks" id="extras">
+            <label class="check"><input type="checkbox" data-p="14900" checked /><span>Скрытая LED‑подсветка рабочей зоны</span><b>+14 900 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="19500" checked /><span>Доводчики и push‑to‑open Blum</span><b>+19 500 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="12400" /><span>Сушилка и органайзеры ящиков</span><b>+12 400 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="18900" /><span>Мойка и смеситель в комплекте</span><b>+18 900 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="89000" /><span>Встроенная техника (базовый комплект)</span><b>+89 000 ₽</b></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz rv">
+        <div class="plan">
+          <svg id="planSvg" viewBox="0 0 420 300" role="img" aria-label="Схема планировки кухни сверху"></svg>
+        </div>
+        <div class="price">
+          <div class="row"><span>Корпуса и фасады</span><b id="rFront">—</b></div>
+          <div class="row"><span>Столешница</span><b id="rTop">—</b></div>
+          <div class="row"><span>Комплектация</span><b id="rExtra">—</b></div>
+          <div class="row"><span>Замер, доставка, сборка</span><b>включено</b></div>
+          <div class="hr" style="margin:14px 0"></div>
+          <div class="flabel" style="margin-bottom:4px">Предварительная стоимость</div>
+          <div class="total"><span class="num" id="sum">0 ₽</span><span class="was" id="was">0 ₽</span></div>
+          <p class="note">Цена указана с учётом акции −20% на заказ. Точная смета — после замера и утверждения чертежа.</p>
+          <a class="btn" href="#request" style="width:100%">Зафиксировать расчёт и вызвать замерщика</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="pad" id="projects" style="background:var(--surface);border-block:1px solid var(--line-soft)">
+  <div class="wrap">
+    <p class="eyebrow rv">Модульные проекты</p>
+    <h2 class="rv">Готовые решения,<br />которые можно изменить под себя</h2>
+    <p class="lead rv" style="margin-top:18px">Каждый проект — реальный комплект модулей нашего производства. Меняем длину, цвет фасадов и наполнение без потери цены и срока.</p>
+    <div class="chips rv" id="chips">
+      <button class="chip on" data-f="all">Все проекты</button>
+      <button class="chip" data-f="line">Прямые</button>
+      <button class="chip" data-f="corner">Угловые</button>
+      <button class="chip" data-f="u">П‑образные</button>
+      <button class="chip" data-f="storage">Шкафы</button>
+    </div>
+    <div class="grid3" id="cards">
+      <article class="card rv" data-t="line">
+        <div class="ph"><span class="tag">Прямая · 3,2 м</span><img src="assets/kitchen-dark.jpeg" alt="Кухня Graphite Oak" /></div>
+        <div class="body">
+          <h3>Graphite Oak</h3>
+          <p>Матовый графит и дубовый шпон, интегрированная подсветка, каменная столешница.</p>
+          <div class="pricetag">от 268 000 ₽ <small>/ комплект</small></div>
+          <div class="specs"><span>Фасады: <b>эмаль + шпон</b></span><span>Срок: <b>40 дн</b></span></div>
+        </div>
+      </article>
+      <article class="card rv" data-t="u">
+        <div class="ph"><span class="tag">П‑образная · 4,6 м</span><img src="assets/kitchen-light.jpeg" alt="Кухня Cream Brass" /></div>
+        <div class="body">
+          <h3>Cream Brass</h3>
+          <p>Фрезеровка в тонкой рамке, латунная фурнитура, витрины с алюминиевым профилем.</p>
+          <div class="pricetag">от 412 000 ₽ <small>/ комплект</small></div>
+          <div class="specs"><span>Фасады: <b>эмаль матовая</b></span><span>Срок: <b>48 дн</b></span></div>
+        </div>
+      </article>
+      <article class="card rv" data-t="line">
+        <div class="ph"><span class="tag">Прямая · 2,8 м</span><img src="assets/kitchen-loft.jpeg" alt="Кухня Forest Loft" /></div>
+        <div class="body">
+          <h3>Forest Loft</h3>
+          <p>Глубокий зелёный матовый цвет, открытая полка из ореха, бетонная столешница.</p>
+          <div class="pricetag">от 196 000 ₽ <small>/ комплект</small></div>
+          <div class="specs"><span>Фасады: <b>МДФ эмаль</b></span><span>Срок: <b>35 дн</b></span></div>
+        </div>
+      </article>
+      <article class="card rv" data-t="corner">
+        <div class="ph"><span class="tag">Угловая · 3,6 м</span><img src="assets/kitchen-scandi.jpeg" alt="Кухня Nord White" /></div>
+        <div class="body">
+          <h3>Nord White</h3>
+          <p>Белые гладкие фасады без ручек, ясеневые полки, кварцевая столешница.</p>
+          <div class="pricetag">от 254 000 ₽ <small>/ комплект</small></div>
+          <div class="specs"><span>Фасады: <b>ЛДСП премиум</b></span><span>Срок: <b>38 дн</b></span></div>
+        </div>
+      </article>
+      <article class="card rv" data-t="storage">
+        <div class="ph"><span class="tag">Шкаф · 3,0 м</span><img src="assets/wardrobe.jpeg" alt="Шкаф Smoke Oak" /></div>
+        <div class="body">
+          <h3>Smoke Oak Storage</h3>
+          <p>Встроенный шкаф до потолка: дымчатый дуб, антрацит, подсветка полок.</p>
+          <div class="pricetag">от 148 000 ₽ <small>/ комплект</small></div>
+          <div class="specs"><span>Наполнение: <b>под заказ</b></span><span>Срок: <b>30 дн</b></span></div>
+        </div>
+      </article>
+      <article class="card cta-card rv" data-t="all">
+        <h3>Нужен полностью индивидуальный проект?</h3>
+        <p style="color:rgba(244,242,239,.8);margin:0;font-size:14.5px">Дизайнер со стажем 7 лет спроектирует кухню под вашу планировку, коммуникации и розетки. Чертёж с размерами и описанием — на руки.</p>
+        <a class="btn" href="#request">Обсудить проект</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="pad" id="materials">
+  <div class="wrap">
+    <p class="eyebrow rv">Материалы и фурнитура</p>
+    <div class="split rv">
+      <div class="media"><img src="assets/materials.jpeg" alt="Образцы материалов: эмаль, шпон дуба, кварц, фурнитура" /></div>
+      <div class="txt">
+        <h2 style="font-size:clamp(26px,2.6vw,34px)">Премиум‑материалы<br />с понятной спецификацией</h2>
+        <p class="lead" style="margin-top:16px">В договоре прописываем, что и какого цвета должно быть. Никаких «похожих» декоров и замен без согласования.</p>
+        <div class="speclist">
+          <div><span>Корпус</span><b>ЛДСП 18 мм, влагостойкий</b></div>
+          <div><span>Фасады</span><b>эмаль, шпон, массив, ЛДСП премиум</b></div>
+          <div><span>Столешницы</span><b>кварц, искусственный камень, компакт</b></div>
+          <div><span>Фурнитура</span><b>Blum, Hettich — с доводчиками</b></div>
+          <div><span>Кромка</span><b>ABS 2 мм в цвет фасада</b></div>
+          <div><span>Гарантия</span><b>18 месяцев, без чеков и актов</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="pad" id="process" style="background:var(--surface);border-block:1px solid var(--line-soft)">
+  <div class="wrap">
+    <p class="eyebrow rv">Как мы работаем</p>
+    <h2 class="rv">Шесть шагов<br />без сюрпризов в конце</h2>
+    <div class="steps">
+      <div class="step rv"><b>ШАГ 01</b><h3>Замер и бриф</h3><p>Бесплатно приезжаем, снимаем размеры, учитываем коммуникации и розетки.</p></div>
+      <div class="step rv"><b>ШАГ 02</b><h3>Проект и 3D</h3><p>Дизайнер со стажем 7 лет собирает планировку, вы видите кухню до производства.</p></div>
+      <div class="step rv"><b>ШАГ 03</b><h3>Чертёж и договор</h3><p>Отдаём чертёж с размерами и описанием: что где находится, какого цвета и из чего.</p></div>
+      <div class="step rv"><b>ШАГ 04</b><h3>Производство</h3><p>Своя фабрика в Вологде — контролируем сроки и качество на каждом этапе.</p></div>
+      <div class="step rv"><b>ШАГ 05</b><h3>Сборка и установка</h3><p>Входят в стоимость. Средний стаж сборщиков — 11 лет, аккуратно и за один заезд.</p></div>
+      <div class="step rv"><b>ШАГ 06</b><h3>Гарантия 18 месяцев</h3><p>Реальная гарантия без чеков, споров, актов и прочей бюрократии.</p></div>
+    </div>
+
+    <div class="facts">
+      <div class="fact rv"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E08B45" stroke-width="1.6"/></svg><p>Работаем с 2006 года — почти 20 лет в Вологде и области.</p></div>
+      <div class="fact rv"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E08B45" stroke-width="1.6"/></svg><p>Сборка и установка входят в стоимость — без доплат «по факту».</p></div>
+      <div class="fact rv"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E08B45" stroke-width="1.6"/></svg><p>В договоре фиксируем цвет и материалы: заказали одно — приедет именно оно.</p></div>
+      <div class="fact rv"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E08B45" stroke-width="1.6"/></svg><p>Рассрочка без процентов и переплат от банка‑партнёра.</p></div>
+      <div class="fact rv"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E08B45" stroke-width="1.6"/></svg><p>Чертёж с размерами и подробным описанием — остаётся у вас.</p></div>
+      <div class="fact rv"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E08B45" stroke-width="1.6"/></svg><p>В среднем сдаём кухню за 45 рабочих дней.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REQUEST -->
+<section class="pad form-sec" id="request">
+  <div class="wrap" style="max-width:860px">
+    <p class="eyebrow rv">Заявка на замер</p>
+    <h2 class="rv">Бесплатный замер<br />и расчёт за 1 день</h2>
+    <p class="lead rv" style="margin-top:16px">Оставьте контакты — дизайнер свяжется, уточнит планировку и предложит 2–3 варианта решения с ценой.</p>
+    <form class="form-grid rv" id="form" novalidate>
+      <div class="inp"><label for="n">Имя</label><input id="n" name="name" placeholder="Как к вам обращаться" required /></div>
+      <div class="inp"><label for="p">Телефон</label><input id="p" name="phone" type="tel" placeholder="+7 (___) ___‑__‑__" required /></div>
+      <div class="inp"><label for="t">Что нужно</label><select id="t" name="type"><option>Кухня на заказ</option><option>Модульный проект</option><option>Шкаф / гардеробная</option><option>Другая мебель</option></select></div>
+      <div class="inp"><label for="d">Удобное время звонка</label><select id="d" name="time"><option>В любое время</option><option>9:00–13:00</option><option>13:00–18:00</option><option>После 18:00</option></select></div>
+      <div class="inp full"><label for="c">Комментарий</label><textarea id="c" name="comment" placeholder="Размеры помещения, пожелания по цвету и материалам"></textarea></div>
+      <div class="inp full"><button class="btn" type="submit" style="width:100%">Вызвать замерщика бесплатно</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+        <div class="ok" id="ok">Заявка отправлена. Мы позвоним в течение рабочего дня и подтвердим время замера.</div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="brand" href="#top" style="margin-bottom:16px"><b>Le<i>MARI</i></b><span>Вологда</span></a>
+        <p style="color:var(--muted);font-size:14px;max-width:34ch;margin:0">Кухни, шкафы и корпусная мебель на заказ. Собственное производство, гарантия 18 месяцев.</p>
+      </div>
+      <div><h4>Разделы</h4><ul>
+        <li><a href="#configurator">Конструктор</a></li>
+        <li><a href="#projects">Модульные проекты</a></li>
+        <li><a href="#materials">Материалы</a></li>
+        <li><a href="#process">Как работаем</a></li>
+      </ul></div>
+      <div><h4>Контакты</h4><ul>
+        <li><a href="tel:+78172000000">+7 (8172) 00‑00‑00</a></li>
+        <li>hello@lemari35.ru</li>
+        <li>Вологда, ул. Примерная, 1</li>
+        <li>Ежедневно 10:00–20:00</li>
+      </ul></div>
+      <div><h4>Салон</h4><ul>
+        <li>Показываем образцы фасадов</li>
+        <li>Рассрочка 0% на месте</li>
+        <li>Замер по Вологде — бесплатно</li>
+      </ul></div>
+    </div>
+    <div class="fbot"><span>© 2026 LeMARI Вологда. Все права защищены.</span><span>Макет сайта · демо-контент</span></div>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet" aria-hidden="true">
+  <button class="close" id="sheetClose" aria-label="Закрыть меню">×</button>
+  <a href="#configurator">Конструктор</a>
+  <a href="#projects">Модульные проекты</a>
+  <a href="#materials">Материалы</a>
+  <a href="#process">Как работаем</a>
+  <a href="tel:+78172000000">+7 (8172) 00‑00‑00</a>
+  <a class="btn" href="#request">Заявка на замер</a>
+</div>
+
+<div class="mobile-bar">
+  <a class="btn ghost" href="tel:+78172000000">Позвонить</a>
+  <a class="btn" href="#request">Замер бесплатно</a>
+</div>
+
+<script>
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* header state */
+const hdr = document.getElementById('hdr');
+const onScroll = () => {
+  hdr.classList.toggle('stuck', window.scrollY > 40);
+  const bg = document.getElementById('heroBg');
+  if (bg && !reduced && window.scrollY < window.innerHeight) {
+    bg.style.transform = 'translateY(' + (window.scrollY * 0.16) + 'px)';
+  }
+};
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* reveal on scroll */
+const io = new IntersectionObserver((es) => {
+  es.forEach((e, i) => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      setTimeout(() => el.classList.add('in'), Math.min(i * 70, 280));
+      io.unobserve(el);
+    }
+  });
+}, {threshold:0.14, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+/* stat counters */
+const counters = document.querySelectorAll('[data-count]');
+const cio = new IntersectionObserver((es) => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = +el.dataset.count, suffix = el.querySelector('small');
+    let t0 = null;
+    const step = (ts) => {
+      if (!t0) t0 = ts;
+      const k = Math.min((ts - t0) / 1100, 1);
+      const val = Math.round(target * (1 - Math.pow(1 - k, 3)));
+      el.textContent = val;
+      if (suffix) el.appendChild(suffix);
+      if (k < 1) requestAnimationFrame(step);
+    };
+    reduced ? (el.textContent = target, suffix && el.appendChild(suffix)) : requestAnimationFrame(step);
+    cio.unobserve(el);
+  });
+}, {threshold:0.5});
+counters.forEach(c => cio.observe(c));
+
+/* ---------- configurator ---------- */
+const state = {layout:'line', layoutK:1, layoutName:'Прямая', len:3.2, front:32000, frontName:'Эмаль матовая', top:14500, topName:'Искусственный камень', upK:1.06, upName:'До 920 мм'};
+const fmt = n => new Intl.NumberFormat('ru-RU').format(Math.round(n)) + ' ₽';
+
+function group(id, fn){
+  const root = document.getElementById(id);
+  root.addEventListener('click', e => {
+    const b = e.target.closest('.opt');
+    if (!b) return;
+    root.querySelectorAll('.opt').forEach(x => x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    fn(b);
+    render();
+  });
+}
+group('layout', b => {state.layout = b.dataset.v; state.layoutK = +b.dataset.k; state.layoutName = b.textContent.split('\n')[0]; document.getElementById('lblLayout').textContent = b.childNodes[0].textContent;});
+group('fronts', b => {state.front = +b.dataset.p; state.frontName = b.dataset.v; document.getElementById('lblFront').textContent = b.dataset.v;});
+group('tops', b => {state.top = +b.dataset.p; state.topName = b.dataset.v; document.getElementById('lblTop').textContent = b.dataset.v;});
+group('ups', b => {state.upK = +b.dataset.k; state.upName = b.dataset.v; document.getElementById('lblUp').textContent = b.dataset.v;});
+
+const lenEl = document.getElementById('len');
+lenEl.addEventListener('input', () => {
+  state.len = +lenEl.value;
+  document.getElementById('lenVal').textContent = state.len.toFixed(1);
+  render();
+});
+document.getElementById('extras').addEventListener('change', render);
+
+/* animated number */
+let shown = 0;
+function tween(to){
+  if (reduced) {shown = to; document.getElementById('sum').textContent = fmt(to); return;}
+  const from = shown, t0 = performance.now();
+  const step = ts => {
+    const k = Math.min((ts - t0) / 420, 1);
+    shown = from + (to - from) * (1 - Math.pow(1 - k, 3));
+    document.getElementById('sum').textContent = fmt(shown);
+    if (k < 1) requestAnimationFrame(step);
+    else shown = to;
+  };
+  requestAnimationFrame(step);
+}
+
+/* plan drawing */
+const NS = 'http://www.w3.org/2000/svg';
+function rect(x,y,w,h,opt={}){
+  const r = document.createElementNS(NS,'rect');
+  r.setAttribute('x',x); r.setAttribute('y',y); r.setAttribute('width',Math.max(w,1)); r.setAttribute('height',h);
+  r.setAttribute('rx', opt.rx ?? 2);
+  r.setAttribute('fill', opt.fill ?? 'rgba(224,139,69,.16)');
+  r.setAttribute('stroke', opt.stroke ?? 'rgba(224,139,69,.85)');
+  r.setAttribute('stroke-width', opt.sw ?? 1);
+  return r;
+}
+function text(x,y,s,opt={}){
+  const t = document.createElementNS(NS,'text');
+  t.setAttribute('x',x); t.setAttribute('y',y);
+  t.setAttribute('fill', opt.fill ?? 'rgba(244,242,239,.55)');
+  t.setAttribute('font-size', opt.fs ?? 10);
+  t.setAttribute('letter-spacing','.08em');
+  t.setAttribute('text-anchor', opt.anchor ?? 'start');
+  t.textContent = s;
+  return t;
+}
+function line(x1,y1,x2,y2,dash){
+  const l = document.createElementNS(NS,'line');
+  l.setAttribute('x1',x1); l.setAttribute('y1',y1); l.setAttribute('x2',x2); l.setAttribute('y2',y2);
+  l.setAttribute('stroke','rgba(244,242,239,.28)'); l.setAttribute('stroke-width',1);
+  if (dash) l.setAttribute('stroke-dasharray','3 4');
+  return l;
+}
+function modules(x, y, w, h, horizontal){
+  const g = document.createElementNS(NS,'g');
+  const span = horizontal ? w : h;
+  const n = Math.max(2, Math.round(span / 34));
+  const size = (span - (n - 1) * 3) / n;
+  for (let i = 0; i < n; i++){
+    const off = i * (size + 3);
+    g.appendChild(horizontal ? rect(x + off, y, size, h) : rect(x, y + off, w, size));
+  }
+  return g;
+}
+function drawPlan(){
+  const svg = document.getElementById('planSvg');
+  svg.innerHTML = '';
+  const W = 420, H = 300, pad = 46, D = 26;
+  const walls = document.createElementNS(NS,'g');
+  walls.appendChild(rect(pad - 8, pad - 8, W - 2*pad + 16, H - 2*pad + 16, {fill:'rgba(255,255,255,.02)', stroke:'rgba(244,242,239,.16)', rx:4}));
+  svg.appendChild(walls);
+
+  const maxW = W - 2*pad;
+  const t = (state.len - 1.6) / (6 - 1.6);
+  const runW = maxW * (0.42 + 0.58 * t);
+  const bottomY = H - pad - D;
+  svg.appendChild(modules(pad, bottomY, runW, D, true));
+
+  if (state.layout === 'corner' || state.layout === 'u'){
+    svg.appendChild(modules(pad, pad, D, (bottomY - pad) * 0.72, false));
+  }
+  if (state.layout === 'u'){
+    svg.appendChild(modules(pad + runW - D, pad, D, (bottomY - pad) * 0.72, false));
+  }
+  if (state.layout === 'island'){
+    const iw = runW * 0.5;
+    svg.appendChild(rect(pad + (runW - iw)/2, pad + 40, iw, D + 8, {fill:'rgba(224,139,69,.1)'}));
+    svg.appendChild(text(pad + runW/2, pad + 34, 'ОСТРОВ', {anchor:'middle', fs:9}));
+  }
+
+  svg.appendChild(line(pad, H - pad + 10, pad + runW, H - pad + 10));
+  svg.appendChild(line(pad, H - pad + 6, pad, H - pad + 14));
+  svg.appendChild(line(pad + runW, H - pad + 6, pad + runW, H - pad + 14));
+  svg.appendChild(text(pad + runW/2, H - pad + 24, state.len.toFixed(1) + ' м', {anchor:'middle', fill:'rgba(244,242,239,.75)'}));
+  svg.appendChild(text(pad - 8, pad - 18, state.layoutName.toUpperCase() + ' · ' + state.frontName.toUpperCase(), {fs:9, fill:'rgba(224,139,69,.9)'}));
+  svg.appendChild(text(pad, pad + (state.layout === 'island' ? 96 : 18), 'ГЛУБИНА 600 ММ · МОДУЛИ ПО 600/800 ММ', {fs:8.5}));
+}
+
+function render(){
+  const body = state.len * state.front * state.layoutK * state.upK;
+  const topCost = state.len * state.layoutK * state.top;
+  let extras = 0;
+  document.querySelectorAll('#extras input:checked').forEach(i => extras += +i.dataset.p);
+  const total = body + topCost + extras;
+  document.getElementById('rFront').textContent = fmt(body);
+  document.getElementById('rTop').textContent = fmt(topCost);
+  document.getElementById('rExtra').textContent = extras ? fmt(extras) : '—';
+  document.getElementById('was').textContent = fmt(total / 0.8);
+  tween(total);
+  drawPlan();
+}
+render();
+
+/* projects filter */
+const cards = [...document.querySelectorAll('#cards .card')];
+document.getElementById('chips').addEventListener('click', e => {
+  const c = e.target.closest('.chip');
+  if (!c) return;
+  document.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
+  c.classList.add('on');
+  const f = c.dataset.f;
+  cards.forEach(card => {
+    const show = f === 'all' || card.dataset.t === f || card.classList.contains('cta-card');
+    card.style.display = show ? '' : 'none';
+    if (show) {card.classList.remove('in'); requestAnimationFrame(() => card.classList.add('in'));}
+  });
+});
+
+/* form */
+document.getElementById('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target;
+  if (!f.name.value.trim() || f.phone.value.replace(/\D/g,'').length < 10){
+    (!f.name.value.trim() ? f.name : f.phone).focus();
+    (!f.name.value.trim() ? f.name : f.phone).style.borderColor = '#E97366';
+    return;
+  }
+  f.name.style.borderColor = ''; f.phone.style.borderColor = '';
+  document.getElementById('ok').classList.add('show');
+  f.reset();
+});
+
+/* mobile menu */
+const sheet = document.getElementById('sheet');
+const setSheet = open => {
+  sheet.classList.toggle('open', open);
+  sheet.setAttribute('aria-hidden', String(!open));
+  document.body.style.overflow = open ? 'hidden' : '';
+};
+document.querySelector('.burger').addEventListener('click', () => setSheet(true));
+document.getElementById('sheetClose').addEventListener('click', () => setSheet(false));
+sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setSheet(false)));
+document.addEventListener('keydown', e => {if (e.key === 'Escape') setSheet(false);});
+</script>
+</body>
+</html>
