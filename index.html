@@ -71,7 +71,7 @@ header.stuck{background:rgba(11,11,12,.82);border-bottom-color:var(--line-soft);
 .brand{display:flex;flex-direction:column;line-height:1;margin-right:auto}
 .brand b{font-size:22px;font-weight:700;letter-spacing:.02em}
 .brand b i{font-style:normal;color:var(--accent)}
-.brand span{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.brand span{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px;white-space:nowrap}
 .nav a.link{font-size:14px;color:var(--muted);position:relative;padding:6px 0;transition:color .2s}
 .nav a.link::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--accent);transition:width .3s ease}
 .nav a.link:hover{color:var(--text)}
@@ -245,6 +245,72 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 .map-wrap{position:relative;min-height:430px;border-radius:14px;overflow:hidden;border:1px solid var(--line-soft);background:var(--surface);box-shadow:0 12px 40px rgba(0,0,0,.35)}
 .map-wrap iframe{width:100%;height:100%;min-height:430px;border:0;display:block}
 
+/* length sliders */
+.lengths-field{display:grid;gap:16px}
+.length-slider{background:rgba(255,255,255,.02);border:1px solid var(--line-soft);border-radius:var(--r);padding:14px 16px;transition:border-color .2s}
+.length-slider:focus-within{border-color:var(--accent)}
+.length-slider.hidden{display:none}
+.length-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:14px}
+.length-header b{color:var(--accent);font-size:15px}
+.facade-note{font-size:12.5px;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--line-soft);border-radius:8px;padding:10px 14px;margin-top:10px;line-height:1.45}
+
+/* modal questionnaire */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(8,8,10,.82);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .3s ease,visibility .3s ease;
+}
+.modal-backdrop.open{opacity:1;visibility:visible;pointer-events:auto}
+.modal-window{
+  position:relative;width:100%;max-width:560px;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:16px;padding:36px 32px 30px;
+  box-shadow:0 24px 70px rgba(0,0,0,.75);
+  transform:translateY(16px) scale(.98);
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+  max-height:92vh;overflow-y:auto;
+}
+.modal-backdrop.open .modal-window{transform:none}
+.modal-close{
+  position:absolute;top:18px;right:18px;width:38px;height:38px;
+  border-radius:8px;border:1px solid var(--line-soft);background:transparent;
+  color:var(--text);font-size:24px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;
+}
+.modal-close:hover{background:var(--raised);border-color:var(--line)}
+.modal-title{font-size:21px;font-weight:600;line-height:1.3;margin-bottom:10px;color:var(--text);letter-spacing:-.01em}
+.modal-subtitle{font-size:14px;color:var(--muted);line-height:1.5;margin:0 0 22px}
+.modal-form{display:grid;gap:14px}
+.m-field label{
+  display:flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:500;
+}
+.m-field input,.m-field textarea{
+  width:100%;min-height:48px;background:var(--raised);border:1px solid var(--line);
+  border-radius:var(--r);padding:12px 14px;color:var(--text);font-size:15px;
+  transition:border-color .2s,background .2s;
+}
+.m-field textarea{min-height:86px;resize:vertical}
+.m-field input:focus,.m-field textarea:focus{border-color:var(--accent);outline:none;background:#1E2023}
+.phone-input-wrap{
+  display:flex;align-items:center;background:var(--raised);border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden;transition:border-color .2s;
+}
+.phone-input-wrap:focus-within{border-color:var(--accent);background:#1E2023}
+.flag-prefix{
+  padding:0 12px;font-size:14px;color:var(--text);display:flex;align-items:center;gap:6px;
+  border-right:1px solid var(--line-soft);white-space:nowrap;user-select:none;
+}
+.phone-input-wrap input{border:none;border-radius:0;background:transparent!important;flex:1}
+.modal-submit{
+  width:100%;min-height:52px;margin-top:8px;font-size:14px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+}
+.modal-disclaimer{font-size:12px;color:var(--muted);margin:6px 0 0;text-align:center;line-height:1.4}
+.modal-ok{display:none;margin-top:14px}
+.modal-ok.show{display:block}
+
 footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 0 40px}
 .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
 .fgrid h4{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:500}
@@ -296,14 +362,14 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
 
 <header id="hdr">
   <div class="wrap nav">
-    <a class="brand" href="#top"><b>Le<i>MARI</i></b><span>Вологда</span></a>
+    <a class="brand" href="#top"><b>Le<i>MARI</i></b><span>Вологда · Москва · Санкт-Петербург</span></a>
     <a class="link" href="#configurator">Конструктор</a>
     <a class="link" href="#projects">Модульные проекты</a>
     <a class="link" href="#materials">Материалы</a>
     <a class="link" href="#process">Как работаем</a>
     <a class="link" href="#contacts">Контакты</a>
     <a class="tel" href="tel:+79814340888">+7 981 434 08 88</a>
-    <a class="btn" href="#request">Заявка на замер</a>
+    <button class="btn" id="openContactModal" type="button">Связаться</button>
     <button class="burger" aria-label="Меню"><span></span></button>
   </div>
 </header>
@@ -319,7 +385,8 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
     <h1 class="rv">Кухни и шкафы<br />по вашим размерам, <em>без компромиссов</em></h1>
     <p class="rv">Индивидуальный проект, честный чертёж с размерами, цвет и материалы зафиксированы в договоре. Сборка и установка уже в стоимости.</p>
     <div class="hero-cta rv">
-      <a class="btn" href="#configurator">Собрать кухню и узнать цену</a>
+      <a class="btn" href="#request">Заявка на замер</a>
+      <a class="btn ghost" href="#configurator">Собрать кухню и узнать цену</a>
       <a class="btn ghost" href="#projects">Модульные проекты</a>
     </div>
     <div class="stats rv">
@@ -357,18 +424,50 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
           </div>
         </div>
 
-        <div class="field">
-          <div class="flabel">Длина по фасаду <b><span id="lenVal">3.2</span> м</b></div>
-          <input type="range" id="len" min="1.6" max="6" step="0.1" value="3.2" aria-label="Длина кухни в метрах" />
+        <div class="field" id="lengthsField">
+          <div class="flabel" style="margin-bottom:12px">Размеры по фасадам</div>
+          
+          <div class="length-slider" id="sliderBoxA">
+            <div class="length-header"><span>Фасад A <small style="color:var(--muted)">(основная стена)</small></span><b><span id="lenValA">3.2</span> м</b></div>
+            <input type="range" id="lenA" min="1.6" max="6.0" step="0.1" value="3.2" aria-label="Длина по фасаду A" />
+          </div>
+
+          <div class="length-slider hidden" id="sliderBoxB">
+            <div class="length-header"><span>Фасад B <small style="color:var(--muted)">(левое крыло)</small></span><b><span id="lenValB">2.0</span> м</b></div>
+            <input type="range" id="lenB" min="1.0" max="4.0" step="0.1" value="2.0" aria-label="Длина по фасаду B" />
+          </div>
+
+          <div class="length-slider hidden" id="sliderBoxC">
+            <div class="length-header"><span>Фасад C <small style="color:var(--muted)">(правое крыло)</small></span><b><span id="lenValC">1.8</span> м</b></div>
+            <input type="range" id="lenC" min="1.0" max="4.0" step="0.1" value="1.8" aria-label="Длина по фасаду C" />
+          </div>
+
+          <div class="length-slider hidden" id="sliderBoxIsland">
+            <div class="length-header"><span>Длина острова</span><b><span id="lenValIsland">1.6</span> м</b></div>
+            <input type="range" id="lenIsland" min="1.2" max="3.0" step="0.1" value="1.6" aria-label="Длина острова" />
+          </div>
         </div>
 
         <div class="field">
           <div class="flabel">Фасады <b id="lblFront">Эмаль матовая</b></div>
           <div class="opts" id="fronts">
             <button class="opt" aria-pressed="false" data-p="18000" data-v="ЛДСП премиум">ЛДСП премиум<small>от 18 000 ₽/м.п.</small></button>
+            <button class="opt" aria-pressed="false" data-p="22000" data-v="Пленка ПВХ">Пленка ПВХ<small>от 22 000 ₽/м.п.</small></button>
+            <button class="opt" aria-pressed="false" data-p="28000" data-v="Пластик (HPL/Fenix)">Пластик<small>от 28 000 ₽/м.п.</small></button>
             <button class="opt" aria-pressed="true" data-p="32000" data-v="Эмаль матовая">Эмаль матовая<small>от 32 000 ₽/м.п.</small></button>
-            <button class="opt" aria-pressed="false" data-p="41000" data-v="Шпон дуба">Шпон дуба<small>от 41 000 ₽/м.п.</small></button>
-            <button class="opt" aria-pressed="false" data-p="52000" data-v="Массив ясеня">Массив ясеня<small>от 52 000 ₽/м.п.</small></button>
+            <button class="opt" aria-pressed="false" data-p="36000" data-v="Рамочный фасад">Рамочный фасад<small>от 36 000 ₽/м.п.</small></button>
+            <button class="opt" aria-pressed="false" data-p="42000" data-v="Шпон дуба">Шпон дуба<small>от 42 000 ₽/м.п.</small></button>
+            <button class="opt" aria-pressed="false" data-p="54000" data-v="Массив ясеня">Массив ясеня<small>от 54 000 ₽/м.п.</small></button>
+          </div>
+          <div class="facade-note">💡 <b>Обратите внимание:</b> базовая стоимость рассчитана для гладких фасадов. Фрезеровка фасадов в базовую цену не входит и подключается опционально ниже либо рассчитывается индивидуально при замере.</div>
+        </div>
+
+        <div class="field">
+          <div class="flabel">Фурнитура <b id="lblHardware">Премиум (Blum, Hettich)</b></div>
+          <div class="opts" id="hardwares">
+            <button class="opt" aria-pressed="true" data-p="26000" data-v="Премиум (Blum, Hettich)">Премиум<small>Blum / Hettich (Австрия / Германия)</small></button>
+            <button class="opt" aria-pressed="false" data-p="12000" data-v="Стандарт (Firmax, MakMart)">Стандарт<small>Firmax / MakMart (плавный ход)</small></button>
+            <button class="opt" aria-pressed="false" data-p="0" data-v="Эконом (Boyard)">Эконом<small>Boyard (доводчики в базе)</small></button>
           </div>
         </div>
 
@@ -395,10 +494,13 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
           <div class="flabel">Комплектация</div>
           <div class="checks" id="extras">
             <label class="check"><input type="checkbox" data-p="14900" checked /><span>Скрытая LED‑подсветка рабочей зоны</span><b>+14 900 ₽</b></label>
-            <label class="check"><input type="checkbox" data-p="19500" checked /><span>Доводчики и push‑to‑open Blum</span><b>+19 500 ₽</b></label>
-            <label class="check"><input type="checkbox" data-p="12400" /><span>Сушилка и органайзеры ящиков</span><b>+12 400 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="7500" checked /><span>Сушка для посуды (верхняя база)</span><b>+7 500 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="10500" /><span>Сушка для посуды (нижняя выдвижная база)</span><b>+10 500 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="2000" checked /><span>Органайзер для столовых приборов в ящик</span><b>+2 000 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="3500" checked /><span>Гигиенический алюминиевый поддон под мойку</span><b>+3 500 ₽</b></label>
             <label class="check"><input type="checkbox" data-p="18900" /><span>Мойка и смеситель в комплекте</span><b>+18 900 ₽</b></label>
-            <label class="check"><input type="checkbox" data-p="89000" /><span>Встроенная техника (базовый комплект)</span><b>+89 000 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="89000" /><span>Встроенная техника (варочная панель, духовой шкаф, вытяжка)</span><b>+89 000 ₽</b></label>
+            <label class="check"><input type="checkbox" data-p="15000" /><span>Фрезеровка фасадов (вельвет, классика, интегрированные ручки)</span><b>+15 000 ₽</b></label>
           </div>
         </div>
       </div>
@@ -410,6 +512,7 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
         <div class="price">
           <div class="row"><span>Корпуса и фасады</span><b id="rFront">—</b></div>
           <div class="row"><span>Столешница</span><b id="rTop">—</b></div>
+          <div class="row"><span>Фурнитура</span><b id="rHardware">—</b></div>
           <div class="row"><span>Комплектация</span><b id="rExtra">—</b></div>
           <div class="row"><span>Замер, доставка, сборка</span><b>включено</b></div>
           <div class="hr" style="margin:14px 0"></div>
@@ -610,7 +713,7 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
   <div class="wrap">
     <div class="fgrid">
       <div>
-        <a class="brand" href="#top" style="margin-bottom:16px"><b>Le<i>MARI</i></b><span>Вологда</span></a>
+        <a class="brand" href="#top" style="margin-bottom:16px"><b>Le<i>MARI</i></b><span>Вологда · Москва · Санкт-Петербург</span></a>
         <p style="color:var(--muted);font-size:14px;max-width:34ch;margin:0">Кухни, шкафы и корпусная мебель на заказ. Собственное производство, гарантия 18 месяцев.</p>
       </div>
       <div><h4>Разделы</h4><ul>
@@ -633,7 +736,7 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
         <li>Замер по Вологде — бесплатно</li>
       </ul></div>
     </div>
-    <div class="fbot"><span>© 2026 LeMARI Вологда. Все права защищены.</span><span>Макет сайта · демо-контент</span></div>
+    <div class="fbot"><span>© 2026 LeMARI. Все права защищены.</span><span>Вологда · Москва · Санкт-Петербург</span></div>
   </div>
 </footer>
 
@@ -645,12 +748,60 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
   <a href="#process">Как работаем</a>
   <a href="#contacts">Контакты и схема</a>
   <a href="tel:+79814340888">+7 981 434 08 88</a>
-  <a class="btn" href="#request">Заявка на замер</a>
+  <button class="btn" id="openContactModalSheet" type="button" style="margin-top:16px;width:100%">Связаться</button>
+  <a class="btn ghost" href="#request" style="margin-top:8px;width:100%">Заявка на замер</a>
 </div>
 
 <div class="mobile-bar">
   <a class="btn ghost" href="tel:+79814340888">Позвонить</a>
-  <a class="btn" href="#request">Замер бесплатно</a>
+  <button class="btn" id="openContactModalMobile" type="button">Связаться</button>
+</div>
+
+<!-- MODAL QUESTIONNAIRE -->
+<div class="modal-backdrop" id="contactModal" aria-hidden="true">
+  <div class="modal-window">
+    <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+    <div class="modal-body">
+      <h3 class="modal-title">Мы очень рады, что вы заинтересованы обустройством своей кухни вместе с нами!</h3>
+      <p class="modal-subtitle">Оставьте свои контакты и мы свяжемся с Вами в ближайшее время. Обычно это занимает не более 2-х часов.</p>
+      
+      <form id="contactModalForm" class="modal-form" novalidate>
+        <div class="m-field">
+          <label for="mName">Имя</label>
+          <input type="text" id="mName" name="name" placeholder="Как к вам обращаться" required />
+        </div>
+        
+        <div class="m-field">
+          <label for="mPhone">Телефон</label>
+          <div class="phone-input-wrap">
+            <span class="flag-prefix">🇷🇺 +7</span>
+            <input type="tel" id="mPhone" name="phone" placeholder="(___) ___-__-__" required />
+          </div>
+        </div>
+        
+        <div class="m-field">
+          <label for="mTelegram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="#2AABEE" style="display:inline-block;vertical-align:middle"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.92 9.07c-.14.65-.53.81-1.07.51l-2.95-2.18-1.42 1.37c-.16.16-.29.29-.6.29l.21-3.02 5.5-4.97c.24-.21-.05-.33-.37-.12l-6.8 4.28-2.93-.92c-.64-.2-.65-.64.13-.95l11.45-4.41c.53-.19.99.13.77 1.07z"/></svg>
+            Telegram
+          </label>
+          <input type="text" id="mTelegram" name="telegram" placeholder="Имя пользователя или телефон" />
+        </div>
+        
+        <div class="m-field">
+          <label for="mComment">Комментарий</label>
+          <textarea id="mComment" name="comment" placeholder="Размеры помещения, пожелания или вопросы"></textarea>
+        </div>
+        
+        <button type="submit" class="btn modal-submit">СВЯЖИТЕСЬ СО МНОЙ</button>
+        
+        <p class="modal-disclaimer">Нажимая кнопку, вы соглашаетесь с условиями обработки персональных данных</p>
+        
+        <div class="ok modal-ok" id="modalOk">
+          Заявка отправлена! Мы свяжемся с вами в ближайшее время (обычно в течение 2-х часов).
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -702,11 +853,27 @@ const cio = new IntersectionObserver((es) => {
 counters.forEach(c => cio.observe(c));
 
 /* ---------- configurator ---------- */
-const state = {layout:'line', layoutK:1, layoutName:'Прямая', len:3.2, front:32000, frontName:'Эмаль матовая', top:14500, topName:'Искусственный камень', upK:1.06, upName:'До 920 мм'};
+const state = {
+  layout: 'line',
+  layoutName: 'Прямая',
+  lenA: 3.2,
+  lenB: 2.0,
+  lenC: 1.8,
+  lenIsland: 1.6,
+  front: 32000,
+  frontName: 'Эмаль матовая',
+  hardware: 26000,
+  hardwareName: 'Премиум (Blum, Hettich)',
+  top: 14500,
+  topName: 'Искусственный камень',
+  upK: 1.06,
+  upName: 'До 920 мм'
+};
 const fmt = n => new Intl.NumberFormat('ru-RU').format(Math.round(n)) + ' ₽';
 
 function group(id, fn){
   const root = document.getElementById(id);
+  if (!root) return;
   root.addEventListener('click', e => {
     const b = e.target.closest('.opt');
     if (!b) return;
@@ -716,18 +883,78 @@ function group(id, fn){
     render();
   });
 }
-group('layout', b => {state.layout = b.dataset.v; state.layoutK = +b.dataset.k; state.layoutName = b.textContent.split('\n')[0]; document.getElementById('lblLayout').textContent = b.childNodes[0].textContent;});
-group('fronts', b => {state.front = +b.dataset.p; state.frontName = b.dataset.v; document.getElementById('lblFront').textContent = b.dataset.v;});
-group('tops', b => {state.top = +b.dataset.p; state.topName = b.dataset.v; document.getElementById('lblTop').textContent = b.dataset.v;});
-group('ups', b => {state.upK = +b.dataset.k; state.upName = b.dataset.v; document.getElementById('lblUp').textContent = b.dataset.v;});
 
-const lenEl = document.getElementById('len');
-lenEl.addEventListener('input', () => {
-  state.len = +lenEl.value;
-  document.getElementById('lenVal').textContent = state.len.toFixed(1);
+function updateLayoutSliders(){
+  const isCorner = state.layout === 'corner';
+  const isU = state.layout === 'u';
+  const isIsland = state.layout === 'island';
+  
+  document.getElementById('sliderBoxB').classList.toggle('hidden', !isCorner && !isU);
+  document.getElementById('sliderBoxC').classList.toggle('hidden', !isU);
+  document.getElementById('sliderBoxIsland').classList.toggle('hidden', !isIsland);
+}
+
+group('layout', b => {
+  state.layout = b.dataset.v;
+  state.layoutName = b.childNodes[0].textContent.trim();
+  document.getElementById('lblLayout').textContent = state.layoutName;
+  updateLayoutSliders();
+});
+group('fronts', b => {
+  state.front = +b.dataset.p;
+  state.frontName = b.dataset.v;
+  document.getElementById('lblFront').textContent = b.dataset.v;
+});
+group('hardwares', b => {
+  state.hardware = +b.dataset.p;
+  state.hardwareName = b.dataset.v;
+  document.getElementById('lblHardware').textContent = b.dataset.v;
+});
+group('tops', b => {
+  state.top = +b.dataset.p;
+  state.topName = b.dataset.v;
+  document.getElementById('lblTop').textContent = b.dataset.v;
+});
+group('ups', b => {
+  state.upK = +b.dataset.k;
+  state.upName = b.dataset.v;
+  document.getElementById('lblUp').textContent = b.dataset.v;
+});
+
+const lenA = document.getElementById('lenA');
+const lenB = document.getElementById('lenB');
+const lenC = document.getElementById('lenC');
+const lenIsland = document.getElementById('lenIsland');
+
+lenA.addEventListener('input', () => {
+  state.lenA = +lenA.value;
+  document.getElementById('lenValA').textContent = state.lenA.toFixed(1);
+  render();
+});
+lenB.addEventListener('input', () => {
+  state.lenB = +lenB.value;
+  document.getElementById('lenValB').textContent = state.lenB.toFixed(1);
+  render();
+});
+lenC.addEventListener('input', () => {
+  state.lenC = +lenC.value;
+  document.getElementById('lenValC').textContent = state.lenC.toFixed(1);
+  render();
+});
+lenIsland.addEventListener('input', () => {
+  state.lenIsland = +lenIsland.value;
+  document.getElementById('lenValIsland').textContent = state.lenIsland.toFixed(1);
   render();
 });
 document.getElementById('extras').addEventListener('change', render);
+
+function getTotalLen(){
+  let l = state.lenA;
+  if (state.layout === 'corner') l += state.lenB;
+  else if (state.layout === 'u') l += (state.lenB + state.lenC);
+  else if (state.layout === 'island') l += state.lenIsland;
+  return l;
+}
 
 /* animated number */
 let shown = 0;
@@ -760,8 +987,9 @@ function text(x,y,s,opt={}){
   t.setAttribute('x',x); t.setAttribute('y',y);
   t.setAttribute('fill', opt.fill ?? 'rgba(244,242,239,.55)');
   t.setAttribute('font-size', opt.fs ?? 10);
-  t.setAttribute('letter-spacing','.08em');
+  t.setAttribute('letter-spacing','.06em');
   t.setAttribute('text-anchor', opt.anchor ?? 'start');
+  if (opt.weight) t.setAttribute('font-weight', opt.weight);
   t.textContent = s;
   return t;
 }
@@ -775,7 +1003,7 @@ function line(x1,y1,x2,y2,dash){
 function modules(x, y, w, h, horizontal){
   const g = document.createElementNS(NS,'g');
   const span = horizontal ? w : h;
-  const n = Math.max(2, Math.round(span / 34));
+  const n = Math.max(2, Math.round(span / 32));
   const size = (span - (n - 1) * 3) / n;
   for (let i = 0; i < n; i++){
     const off = i * (size + 3);
@@ -783,48 +1011,105 @@ function modules(x, y, w, h, horizontal){
   }
   return g;
 }
+
 function drawPlan(){
   const svg = document.getElementById('planSvg');
+  if (!svg) return;
   svg.innerHTML = '';
-  const W = 420, H = 300, pad = 46, D = 26;
+  const W = 420, H = 300, padX = 44, padY = 46, D = 24;
+  
+  // Boundary box
   const walls = document.createElementNS(NS,'g');
-  walls.appendChild(rect(pad - 8, pad - 8, W - 2*pad + 16, H - 2*pad + 16, {fill:'rgba(255,255,255,.02)', stroke:'rgba(244,242,239,.16)', rx:4}));
+  walls.appendChild(rect(padX - 8, padY - 8, W - 2*padX + 16, H - 2*padY + 16, {fill:'rgba(255,255,255,.02)', stroke:'rgba(244,242,239,.16)', rx:4}));
   svg.appendChild(walls);
 
-  const maxW = W - 2*pad;
-  const t = (state.len - 1.6) / (6 - 1.6);
-  const runW = maxW * (0.42 + 0.58 * t);
-  const bottomY = H - pad - D;
-  svg.appendChild(modules(pad, bottomY, runW, D, true));
+  const maxSpanW = W - 2*padX - 24;
+  const bottomY = H - padY - D - 8;
+  
+  // Wall A
+  const normA = (state.lenA - 1.6) / (6.0 - 1.6);
+  const runWA = Math.max(160, Math.min(maxSpanW, 160 + normA * (maxSpanW - 160)));
+  const startX = state.layout === 'line' ? padX + (maxSpanW - runWA) / 2 : padX + 22;
+  
+  svg.appendChild(modules(startX, bottomY, runWA, D, true));
+  
+  // Dimension line A
+  svg.appendChild(line(startX, bottomY + D + 12, startX + runWA, bottomY + D + 12));
+  svg.appendChild(line(startX, bottomY + D + 8, startX, bottomY + D + 16));
+  svg.appendChild(line(startX + runWA, bottomY + D + 8, startX + runWA, bottomY + D + 16));
+  svg.appendChild(text(startX + runWA/2, bottomY + D + 24, 'A: ' + state.lenA.toFixed(1) + ' м', {anchor:'middle', fill:'rgba(244,242,239,.8)', fs:9.5}));
+  
+  // Prominent letter A marker
+  svg.appendChild(text(startX + runWA/2, bottomY - 6, 'A', {anchor:'middle', fill:'#E08B45', fs:14, weight:'bold'}));
 
+  // Left Wall B (Corner & U-shape)
   if (state.layout === 'corner' || state.layout === 'u'){
-    svg.appendChild(modules(pad, pad, D, (bottomY - pad) * 0.72, false));
-  }
-  if (state.layout === 'u'){
-    svg.appendChild(modules(pad + runW - D, pad, D, (bottomY - pad) * 0.72, false));
-  }
-  if (state.layout === 'island'){
-    const iw = runW * 0.5;
-    svg.appendChild(rect(pad + (runW - iw)/2, pad + 40, iw, D + 8, {fill:'rgba(224,139,69,.1)'}));
-    svg.appendChild(text(pad + runW/2, pad + 34, 'ОСТРОВ', {anchor:'middle', fs:9}));
+    const normB = (state.lenB - 1.0) / (4.0 - 1.0);
+    const maxHB = bottomY - padY - 8;
+    const runHB = Math.max(65, Math.min(maxHB, 65 + normB * (maxHB - 65)));
+    const topYB = bottomY - runHB;
+    
+    svg.appendChild(modules(startX, topYB, D, runHB, false));
+    
+    // Dimension line B
+    svg.appendChild(line(startX - 12, topYB, startX - 12, bottomY));
+    svg.appendChild(line(startX - 16, topYB, startX - 8, topYB));
+    svg.appendChild(line(startX - 16, bottomY, startX - 8, bottomY));
+    svg.appendChild(text(startX - 15, topYB + runHB/2 + 3, 'B: ' + state.lenB.toFixed(1) + ' м', {anchor:'end', fill:'rgba(244,242,239,.8)', fs:9}));
+    
+    // Prominent letter B marker
+    svg.appendChild(text(startX + D + 14, topYB + runHB/2 + 4, 'B', {anchor:'start', fill:'#E08B45', fs:14, weight:'bold'}));
   }
 
-  svg.appendChild(line(pad, H - pad + 10, pad + runW, H - pad + 10));
-  svg.appendChild(line(pad, H - pad + 6, pad, H - pad + 14));
-  svg.appendChild(line(pad + runW, H - pad + 6, pad + runW, H - pad + 14));
-  svg.appendChild(text(pad + runW/2, H - pad + 24, state.len.toFixed(1) + ' м', {anchor:'middle', fill:'rgba(244,242,239,.75)'}));
-  svg.appendChild(text(pad - 8, pad - 18, state.layoutName.toUpperCase() + ' · ' + state.frontName.toUpperCase(), {fs:9, fill:'rgba(224,139,69,.9)'}));
-  svg.appendChild(text(pad, pad + (state.layout === 'island' ? 96 : 18), 'ГЛУБИНА 600 ММ · МОДУЛИ ПО 600/800 ММ', {fs:8.5}));
+  // Right Wall C (U-shape)
+  if (state.layout === 'u'){
+    const normC = (state.lenC - 1.0) / (4.0 - 1.0);
+    const maxHC = bottomY - padY - 8;
+    const runHC = Math.max(65, Math.min(maxHC, 65 + normC * (maxHC - 65)));
+    const topYC = bottomY - runHC;
+    const posX = startX + runWA - D;
+    
+    svg.appendChild(modules(posX, topYC, D, runHC, false));
+    
+    // Dimension line C
+    svg.appendChild(line(posX + D + 12, topYC, posX + D + 12, bottomY));
+    svg.appendChild(line(posX + D + 8, topYC, posX + D + 16, topYC));
+    svg.appendChild(line(posX + D + 8, bottomY, posX + D + 16, bottomY));
+    svg.appendChild(text(posX + D + 15, topYC + runHC/2 + 3, 'C: ' + state.lenC.toFixed(1) + ' м', {anchor:'start', fill:'rgba(244,242,239,.8)', fs:9}));
+    
+    // Prominent letter C marker
+    svg.appendChild(text(posX - 14, topYC + runHC/2 + 4, 'C', {anchor:'end', fill:'#E08B45', fs:14, weight:'bold'}));
+  }
+
+  // Island
+  if (state.layout === 'island'){
+    const normIsl = (state.lenIsland - 1.2) / (3.0 - 1.2);
+    const islW = Math.max(90, Math.min(180, 90 + normIsl * 90));
+    const islX = startX + (runWA - islW) / 2;
+    const islY = bottomY - 65;
+    
+    svg.appendChild(rect(islX, islY, islW, D + 6, {fill:'rgba(224,139,69,.15)', stroke:'rgba(224,139,69,.9)', rx:3}));
+    svg.appendChild(text(islX + islW/2, islY + 19, 'ОСТРОВ ' + state.lenIsland.toFixed(1) + ' м', {anchor:'middle', fs:9, fill:'rgba(244,242,239,.9)'}));
+  }
+
+  // SVG titles
+  svg.appendChild(text(padX - 8, padY - 18, state.layoutName.toUpperCase() + ' · ' + state.frontName.toUpperCase(), {fs:9.5, fill:'rgba(224,139,69,.9)'}));
+  svg.appendChild(text(W - padX + 8, padY - 18, 'ВСЕГО: ' + getTotalLen().toFixed(1) + ' М.П.', {anchor:'end', fs:9, fill:'rgba(244,242,239,.7)'}));
+  svg.appendChild(text(padX, padY + 10, 'ГЛУБИНА 600 ММ · МОДУЛИ 600/800 ММ', {fs:8.5, fill:'rgba(244,242,239,.45)'}));
 }
 
 function render(){
-  const body = state.len * state.front * state.layoutK * state.upK;
-  const topCost = state.len * state.layoutK * state.top;
+  const totalLen = getTotalLen();
+  const body = totalLen * state.front * state.upK;
+  const topCost = totalLen * state.top;
+  const hardwareCost = state.hardware;
   let extras = 0;
   document.querySelectorAll('#extras input:checked').forEach(i => extras += +i.dataset.p);
-  const total = body + topCost + extras;
+  const total = body + topCost + hardwareCost + extras;
+
   document.getElementById('rFront').textContent = fmt(body);
   document.getElementById('rTop').textContent = fmt(topCost);
+  document.getElementById('rHardware').textContent = hardwareCost ? fmt(hardwareCost) : 'включено';
   document.getElementById('rExtra').textContent = extras ? fmt(extras) : '—';
   document.getElementById('was').textContent = fmt(total / 0.8);
   tween(total);
@@ -847,7 +1132,7 @@ document.getElementById('chips').addEventListener('click', e => {
   });
 });
 
-/* form */
+/* form request */
 document.getElementById('form').addEventListener('submit', e => {
   e.preventDefault();
   const f = e.target;
@@ -871,7 +1156,55 @@ const setSheet = open => {
 document.querySelector('.burger').addEventListener('click', () => setSheet(true));
 document.getElementById('sheetClose').addEventListener('click', () => setSheet(false));
 sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setSheet(false)));
-document.addEventListener('keydown', e => {if (e.key === 'Escape') setSheet(false);});
+
+/* modal questionnaire */
+const contactModal = document.getElementById('contactModal');
+const modalClose = document.getElementById('modalClose');
+const openModal = () => {
+  contactModal.classList.add('open');
+  contactModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+};
+const closeModal = () => {
+  contactModal.classList.remove('open');
+  contactModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+};
+
+document.getElementById('openContactModal')?.addEventListener('click', openModal);
+document.getElementById('openContactModalSheet')?.addEventListener('click', () => {
+  setSheet(false);
+  openModal();
+});
+document.getElementById('openContactModalMobile')?.addEventListener('click', openModal);
+modalClose?.addEventListener('click', closeModal);
+contactModal?.addEventListener('click', e => {
+  if (e.target === contactModal) closeModal();
+});
+
+document.getElementById('contactModalForm')?.addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target;
+  if (!f.name.value.trim() || f.phone.value.replace(/\D/g,'').length < 10){
+    (!f.name.value.trim() ? f.name : f.phone).focus();
+    (!f.name.value.trim() ? f.name : f.phone).style.borderColor = '#E97366';
+    return;
+  }
+  f.name.style.borderColor = ''; f.phone.style.borderColor = '';
+  document.getElementById('modalOk').classList.add('show');
+  f.reset();
+  setTimeout(() => {
+    document.getElementById('modalOk').classList.remove('show');
+    closeModal();
+  }, 3500);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    setSheet(false);
+    closeModal();
+  }
+});
 </script>
 </body>
 </html>
