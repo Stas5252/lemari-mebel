@@ -457,6 +457,7 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
   html{scroll-behavior:auto}
 }
 </style>
+<link rel="stylesheet" href="assets/catalog.css?v=20261016" />
 </head>
 <body>
 
@@ -512,6 +513,7 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
     <h2 class="rv">Соберите свою кухню<br />и увидите цену сразу</h2>
     <p class="lead rv" style="margin-top:18px">Выберите планировку, длину и материалы — план и стоимость пересчитываются в реальном времени. Финальная смета фиксируется после бесплатного замера.</p>
 
+    <div class="catalog-selection" id="catalogSelection" role="status" hidden></div>
     <div class="cfg">
       <div class="panel rv">
         <div class="field">
@@ -627,72 +629,147 @@ footer{background:var(--ink);border-top:1px solid var(--line-soft);padding:64px 
 </section>
 
 <!-- PROJECTS -->
-<section class="pad" id="projects" style="background:var(--surface);border-block:1px solid var(--line-soft)">
+<section class="pad catalog" id="projects" aria-labelledby="catalogTitle" style="background:var(--surface);border-block:1px solid var(--line-soft)">
   <div class="wrap">
-    <p class="eyebrow rv">Модульные проекты</p>
-    <h2 class="rv">Готовые решения,<br />которые можно изменить под себя</h2>
-    <p class="lead rv" style="margin-top:18px">Каждый проект — реальный комплект модулей нашего производства. Меняем длину, цвет фасадов и наполнение без потери цены и срока.</p>
-    <div class="chips rv" id="chips">
-      <button class="chip on" data-f="all">Все проекты</button>
-      <button class="chip" data-f="line">Прямые</button>
-      <button class="chip" data-f="corner">Угловые</button>
-      <button class="chip" data-f="u">П‑образные</button>
-      <button class="chip" data-f="storage">Шкафы</button>
+    <div class="catalog-heading">
+      <div><p class="eyebrow">Каталог LeMARI</p><h2 id="catalogTitle">Модульные проекты</h2><p class="lead">Выберите планировку и цветовое решение. Подберём модули, фасады и наполнение под ваше помещение.</p></div>
+      <span class="catalog-label">Фотографии наших работ</span>
     </div>
-    <div class="grid3" id="cards">
-      <article class="card rv" data-t="line">
-        <div class="ph"><span class="tag">Прямая · 3,2 м</span><img src="assets/kitchen-dark.jpeg?v=20260930" alt="Реальная работа LeMARI: светлая кухня с подсвеченными витринами" /></div>
-        <div class="body">
-          <h3>Graphite Oak</h3>
-          <p>Матовый графит и дубовый шпон, интегрированная подсветка, каменная столешница.</p>
-          <div class="pricetag">от 268 000 ₽ <small>/ комплект</small></div>
-          <div class="specs"><span>Фасады: <b>эмаль + шпон</b></span><span>Срок: <b>40 дн</b></span></div>
-        </div>
-      </article>
-      <article class="card rv" data-t="u">
-        <div class="ph"><span class="tag">П‑образная · 4,6 м</span><img src="assets/kitchen-light.jpeg?v=20260930" alt="Реальная работа LeMARI: кухня до потолка со светлыми и древесными фасадами" /></div>
-        <div class="body">
-          <h3>Cream Brass</h3>
-          <p>Фрезеровка в тонкой рамке, латунная фурнитура, витрины с алюминиевым профилем.</p>
-          <div class="pricetag">от 412 000 ₽ <small>/ комплект</small></div>
-          <div class="specs"><span>Фасады: <b>эмаль матовая</b></span><span>Срок: <b>48 дн</b></span></div>
-        </div>
-      </article>
-      <article class="card rv" data-t="line">
-        <div class="ph"><span class="tag">Прямая · 2,8 м</span><img src="assets/kitchen-loft.jpeg?v=20260930" alt="Реальная работа LeMARI: кухня в бежевых и древесных тонах с фартуком под мрамор" /></div>
-        <div class="body">
-          <h3>Forest Loft</h3>
-          <p>Глубокий зелёный матовый цвет, открытая полка из ореха, бетонная столешница.</p>
-          <div class="pricetag">от 196 000 ₽ <small>/ комплект</small></div>
-          <div class="specs"><span>Фасады: <b>МДФ эмаль</b></span><span>Срок: <b>35 дн</b></span></div>
-        </div>
-      </article>
-      <article class="card rv" data-t="corner">
-        <div class="ph"><span class="tag">Угловая · 3,6 м</span><img src="assets/kitchen-scandi.jpeg?v=20260930" alt="Реальная работа LeMARI: светлая угловая кухня с рельефными фасадами и подсветкой" /></div>
-        <div class="body">
-          <h3>Nord White</h3>
-          <p>Белые гладкие фасады без ручек, ясеневые полки, кварцевая столешница.</p>
-          <div class="pricetag">от 254 000 ₽ <small>/ комплект</small></div>
-          <div class="specs"><span>Фасады: <b>ЛДСП премиум</b></span><span>Срок: <b>38 дн</b></span></div>
-        </div>
-      </article>
-      <article class="card rv" data-t="storage">
-        <div class="ph"><span class="tag">Шкаф · 3,0 м</span><img src="assets/wardrobe.jpeg?v=20260930" alt="Реальная работа LeMARI: распашной шкаф до потолка со светлыми фасадами и деревянными ручками" /></div>
-        <div class="body">
-          <h3>Smoke Oak Storage</h3>
-          <p>Встроенный шкаф до потолка: дымчатый дуб, антрацит, подсветка полок.</p>
-          <div class="pricetag">от 148 000 ₽ <small>/ комплект</small></div>
-          <div class="specs"><span>Наполнение: <b>под заказ</b></span><span>Срок: <b>30 дн</b></span></div>
-        </div>
-      </article>
-      <article class="card cta-card rv" data-t="all">
-        <h3>Нужен полностью индивидуальный проект?</h3>
-        <p style="color:rgba(244,242,239,.8);margin:0;font-size:14.5px">Дизайнер со стажем 7 лет спроектирует кухню под вашу планировку, коммуникации и розетки. Чертёж с размерами и описанием — на руки.</p>
-        <a class="btn" href="#request">Обсудить проект</a>
-      </article>
+    <div class="catalog-tabs" role="group" aria-label="Категории проектов" hidden>
+      <button class="catalog-tab" type="button" data-category="all" aria-pressed="true">Все проекты <span aria-hidden="true">5</span></button>
+      <button class="catalog-tab" type="button" data-category="kitchen" aria-pressed="false">Кухни <span aria-hidden="true">4</span></button>
+      <button class="catalog-tab" type="button" data-category="storage" aria-pressed="false">Шкафы <span aria-hidden="true">1</span></button>
     </div>
+    <div class="catalog-controls" hidden>
+      <div class="catalog-search">
+        <label class="catalog-sr-only" for="catalogSearch">Поиск по проектам</label>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+        <input id="catalogSearch" type="search" placeholder="Название или цвет проекта" autocomplete="off" />
+      </div>
+      <div class="catalog-sort"><label for="catalogSort">Сортировка проектов</label><select id="catalogSort" aria-label="Сортировка проектов"><option value="featured">По умолчанию</option><option value="name-asc">По названию: А–Я</option><option value="name-desc">По названию: Я–А</option></select></div>
+      <button class="catalog-filter-toggle" id="catalogFilterToggle" type="button" aria-controls="catalogFilters" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="8" cy="6" r="2" fill="var(--raised)"/><circle cx="16" cy="12" r="2" fill="var(--raised)"/><circle cx="10" cy="18" r="2" fill="var(--raised)"/></svg>Фильтры</button>
+    </div>
+    <div class="catalog-shell">
+      <aside class="catalog-filter-panel" id="catalogFilters" aria-label="Фильтры проектов" hidden>
+        <h3>Подбор проекта</h3>
+        <div class="catalog-filter-field"><label for="catalogLayout">Планировка проекта</label><select id="catalogLayout"><option value="all">Любая планировка</option><option value="line">Прямая</option><option value="corner">Угловая</option></select></div>
+        <div class="catalog-filter-field"><label for="catalogColor">Цветовое решение</label><select id="catalogColor"><option value="all">Все цвета</option><option value="light">Светлые оттенки</option><option value="beige">Бежевые оттенки</option><option value="wood">Древесный декор</option></select></div>
+        <button class="catalog-reset" type="button" data-catalog-reset>Сбросить фильтры</button>
+        <p class="catalog-filter-note">Понравилась идея? Адаптируем размеры, цвет фасадов и наполнение под ваше помещение.</p>
+      </aside>
+      <div class="catalog-results">
+        <div class="catalog-results-head"><p id="catalogCount" role="status" aria-live="polite">5 проектов</p><span class="catalog-view">Решения LeMARI</span><button class="catalog-reset" id="catalogResetTop" type="button" data-catalog-reset hidden>Сбросить фильтры</button></div>
+        <div class="catalog-grid" id="cards">
+        <article class="card catalog-card" data-project="vitrine" data-kind="kitchen" data-layout="line" data-layout-name="Прямая" data-colors="light" data-order="0" data-search="светлая белая прямая витрины подсветка">
+          <div class="ph">
+            <button class="catalog-photo" type="button" data-project-image-open="vitrine" aria-label="Посмотреть фото: Светлая кухня с витринами" hidden><img src="assets/kitchen-dark.jpeg?v=20260930" width="1080" height="1080" loading="lazy" decoding="async" alt="Работа LeMARI — светлая кухня с витринами" /></button>
+            <noscript><img src="assets/kitchen-dark.jpeg?v=20260930" width="1080" height="1080" loading="lazy" alt="Работа LeMARI — светлая кухня с витринами" /></noscript>
+            <span class="tag">Прямая</span>
+          </div>
+          <div class="body">
+            <div class="catalog-swatches" aria-label="Светлые фасады"><i style="--swatch:#e9e5de" title="Светлые фасады" aria-hidden="true"></i><span>Цветовое решение</span></div>
+            <h3>Светлая кухня с витринами</h3>
+            <p class="catalog-description">Лаконичные фасады, витрины с подсветкой и выразительный фартук. Основа для светлой современной кухни.</p>
+            <div class="catalog-card-meta"><span>Кухня по вашим размерам</span><span>Подбор комплектации</span></div>
+            <div class="catalog-card-cost"><b>Индивидуальный расчёт</b></div>
+            <button class="catalog-open" type="button" data-project-open="vitrine" aria-label="Подробнее о проекте: Светлая кухня с витринами" hidden><span>Смотреть проект</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
+            <a class="catalog-fallback" href="#contacts">Обсудить проект</a>
+          </div>
+        </article>
+        <article class="card catalog-card" data-project="ceiling" data-kind="kitchen" data-layout="corner" data-layout-name="Угловая" data-colors="light wood" data-order="1" data-search="светлая дерево угловая антресоли до потолка">
+          <div class="ph">
+            <button class="catalog-photo" type="button" data-project-image-open="ceiling" aria-label="Посмотреть фото: Светлая кухня до потолка" hidden><img src="assets/kitchen-light.jpeg?v=20260930" width="1080" height="1080" loading="lazy" decoding="async" alt="Работа LeMARI — светлая кухня до потолка" /></button>
+            <noscript><img src="assets/kitchen-light.jpeg?v=20260930" width="1080" height="1080" loading="lazy" alt="Работа LeMARI — светлая кухня до потолка" /></noscript>
+            <span class="tag">Угловая</span>
+          </div>
+          <div class="body">
+            <div class="catalog-swatches" aria-label="Светлые фасады / Древесный декор"><i style="--swatch:#e4e0d8" title="Светлые фасады" aria-hidden="true"></i><i style="--swatch:#8e7051" title="Древесный декор" aria-hidden="true"></i><span>Цветовое решение</span></div>
+            <h3>Светлая кухня до потолка</h3>
+            <p class="catalog-description">Сочетание светлых и древесных фасадов, антресоли и закрытые системы хранения. Продуманное использование высоты помещения.</p>
+            <div class="catalog-card-meta"><span>Кухня по вашим размерам</span><span>Подбор комплектации</span></div>
+            <div class="catalog-card-cost"><b>Индивидуальный расчёт</b></div>
+            <button class="catalog-open" type="button" data-project-open="ceiling" aria-label="Подробнее о проекте: Светлая кухня до потолка" hidden><span>Смотреть проект</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
+            <a class="catalog-fallback" href="#contacts">Обсудить проект</a>
+          </div>
+        </article>
+        <article class="card catalog-card" data-project="beige" data-kind="kitchen" data-layout="corner" data-layout-name="Угловая" data-colors="beige wood" data-order="2" data-search="бежевая дерево тёплая угловая">
+          <div class="ph">
+            <button class="catalog-photo" type="button" data-project-image-open="beige" aria-label="Посмотреть фото: Бежевый и дерево" hidden><img src="assets/kitchen-loft.jpeg?v=20260930" width="1440" height="1800" loading="lazy" decoding="async" alt="Работа LeMARI — бежевый и дерево" /></button>
+            <noscript><img src="assets/kitchen-loft.jpeg?v=20260930" width="1440" height="1800" loading="lazy" alt="Работа LeMARI — бежевый и дерево" /></noscript>
+            <span class="tag">Угловая</span>
+          </div>
+          <div class="body">
+            <div class="catalog-swatches" aria-label="Бежевые фасады / Древесный декор"><i style="--swatch:#c9b69a" title="Бежевые фасады" aria-hidden="true"></i><i style="--swatch:#9a724e" title="Древесный декор" aria-hidden="true"></i><span>Цветовое решение</span></div>
+            <h3>Бежевый и дерево</h3>
+            <p class="catalog-description">Тёплые бежевые оттенки, древесный декор и светлая рабочая зона с рисунком мрамора. Спокойное решение для уютного интерьера.</p>
+            <div class="catalog-card-meta"><span>Кухня по вашим размерам</span><span>Подбор комплектации</span></div>
+            <div class="catalog-card-cost"><b>Индивидуальный расчёт</b></div>
+            <button class="catalog-open" type="button" data-project-open="beige" aria-label="Подробнее о проекте: Бежевый и дерево" hidden><span>Смотреть проект</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
+            <a class="catalog-fallback" href="#contacts">Обсудить проект</a>
+          </div>
+        </article>
+        <article class="card catalog-card" data-project="relief" data-kind="kitchen" data-layout="corner" data-layout-name="Угловая" data-colors="light" data-order="3" data-search="светлая белая рельеф угловая подсветка">
+          <div class="ph">
+            <button class="catalog-photo" type="button" data-project-image-open="relief" aria-label="Посмотреть фото: Кухня с рельефными фасадами" hidden><img src="assets/kitchen-scandi.jpeg?v=20260930" width="1440" height="1790" loading="lazy" decoding="async" alt="Работа LeMARI — кухня с рельефными фасадами" /></button>
+            <noscript><img src="assets/kitchen-scandi.jpeg?v=20260930" width="1440" height="1790" loading="lazy" alt="Работа LeMARI — кухня с рельефными фасадами" /></noscript>
+            <span class="tag">Угловая</span>
+          </div>
+          <div class="body">
+            <div class="catalog-swatches" aria-label="Светлые фасады"><i style="--swatch:#eeeae0" title="Светлые фасады" aria-hidden="true"></i><span>Цветовое решение</span></div>
+            <h3>Кухня с рельефными фасадами</h3>
+            <p class="catalog-description">Рельефные верхние фасады, тёплая подсветка и светлая рабочая поверхность. Выразительные детали в сдержанной палитре.</p>
+            <div class="catalog-card-meta"><span>Кухня по вашим размерам</span><span>Подбор комплектации</span></div>
+            <div class="catalog-card-cost"><b>Индивидуальный расчёт</b></div>
+            <button class="catalog-open" type="button" data-project-open="relief" aria-label="Подробнее о проекте: Кухня с рельефными фасадами" hidden><span>Смотреть проект</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
+            <a class="catalog-fallback" href="#contacts">Обсудить проект</a>
+          </div>
+        </article>
+        <article class="card catalog-card" data-project="wardrobe" data-kind="storage" data-layout="storage" data-layout-name="Распашной шкаф" data-colors="light wood" data-order="4" data-search="светлый белый шкаф распашной хранение дерево">
+          <div class="ph">
+            <button class="catalog-photo" type="button" data-project-image-open="wardrobe" aria-label="Посмотреть фото: Светлый распашной шкаф" hidden><img src="assets/wardrobe.jpeg?v=20260930" width="1440" height="1800" loading="lazy" decoding="async" alt="Работа LeMARI — светлый распашной шкаф" /></button>
+            <noscript><img src="assets/wardrobe.jpeg?v=20260930" width="1440" height="1800" loading="lazy" alt="Работа LeMARI — светлый распашной шкаф" /></noscript>
+            <span class="tag">Распашной шкаф</span>
+          </div>
+          <div class="body">
+            <div class="catalog-swatches" aria-label="Светлые фасады / Древесные детали"><i style="--swatch:#eee9df" title="Светлые фасады" aria-hidden="true"></i><i style="--swatch:#ae8f61" title="Древесные детали" aria-hidden="true"></i><span>Цветовое решение</span></div>
+            <h3>Светлый распашной шкаф</h3>
+            <p class="catalog-description">Шкаф до потолка со светлыми фасадами и деревянными ручками. Наполнение и секции подбираются под ваши задачи хранения.</p>
+            <div class="catalog-card-meta"><span>Хранение по вашим размерам</span><span>Подбор комплектации</span></div>
+            <div class="catalog-card-cost"><b>Индивидуальный расчёт</b></div>
+            <button class="catalog-open" type="button" data-project-open="wardrobe" aria-label="Подробнее о проекте: Светлый распашной шкаф" hidden><span>Смотреть проект</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
+            <a class="catalog-fallback" href="#contacts">Обсудить проект</a>
+          </div>
+        </article>
+        </div>
+        <div class="catalog-empty" id="catalogEmpty" hidden><h3>Ничего не найдено</h3><p>Попробуйте другое название, планировку или цвет. Либо сбросьте фильтры, чтобы посмотреть все проекты.</p><button class="btn ghost" type="button" data-catalog-reset>Сбросить фильтры</button></div>
+        <div class="catalog-footer"><div><h3>Поможем подобрать модули</h3><p>Обсудим планировку, материалы и комплектацию под ваши задачи.</p></div><a class="btn" href="tel:+79814340888">Обсудить проект</a></div>
+      </div>
+    </div>
+    <p class="catalog-disclaimer">На фото — работы LeMARI. Размеры, состав модулей и стоимость рассчитываются индивидуально для вашего проекта.</p>
   </div>
 </section>
+
+<dialog class="catalog-dialog" id="catalogDialog" aria-labelledby="catalogDialogTitle" aria-modal="true">
+  <button class="catalog-dialog-close" id="catalogDialogClose" type="button" aria-label="Закрыть просмотр проекта" autofocus>×</button>
+  <div class="catalog-dialog-grid">
+    <div class="catalog-dialog-photo"><img id="catalogDialogImage" alt="" /></div>
+    <div class="catalog-dialog-content">
+      <p class="eyebrow">Проект LeMARI</p>
+      <h2 id="catalogDialogTitle">Просмотр проекта</h2>
+      <p class="catalog-dialog-description" id="catalogDialogDescription"></p>
+      <dl class="catalog-dialog-specs">
+        <div><dt>Планировка</dt><dd id="catalogDialogLayout"></dd></div>
+        <div><dt>Размеры</dt><dd>Под ваше помещение</dd></div>
+        <div><dt>Корпус</dt><dd>ЛДСП 16 мм</dd></div>
+        <div><dt>Фасады и наполнение</dt><dd>Индивидуальный подбор</dd></div>
+        <div><dt>Стоимость</dt><dd>По расчёту проекта</dd></div>
+      </dl>
+      <p class="catalog-dialog-composition" id="catalogDialogComposition"></p>
+      <div class="catalog-dialog-actions"><a class="btn" id="catalogDialogPrimary" href="#configurator">Рассчитать похожую кухню</a><a class="btn ghost" href="tel:+79814340888">Позвонить: +7 981 434 08 88</a></div>
+      <p class="catalog-dialog-note">Фотография показывает один из выполненных проектов. Вашу комплектацию и точную смету согласуем отдельно.</p>
+    </div>
+  </div>
+</dialog>
 
 <!-- MATERIALS -->
 <section class="pad" id="materials">
@@ -1239,21 +1316,6 @@ function render(){
 }
 render();
 
-/* projects filter */
-const cards = [...document.querySelectorAll('#cards .card')];
-document.getElementById('chips').addEventListener('click', e => {
-  const c = e.target.closest('.chip');
-  if (!c) return;
-  document.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
-  c.classList.add('on');
-  const f = c.dataset.f;
-  cards.forEach(card => {
-    const show = f === 'all' || card.dataset.t === f || card.classList.contains('cta-card');
-    card.style.display = show ? '' : 'none';
-    if (show) {card.classList.remove('in'); requestAnimationFrame(() => card.classList.add('in'));}
-  });
-});
-
 /* form request */
 document.getElementById('form').addEventListener('submit', e => {
   e.preventDefault();
@@ -1328,5 +1390,6 @@ document.addEventListener('keydown', e => {
   }
 });
 </script>
+<script src="assets/catalog.js?v=20261016" defer></script>
 </body>
 </html>
